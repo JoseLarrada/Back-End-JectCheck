@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        h1 {
+            color: #336699;
+            text-align: center;
+        }
+
+        .table1 {
+            border-collapse: collapse;
+            margin-top: 20px;
+            width: 80%;
+        }
+        .table2{
+            border-collapse: collapse;
+            margin-top: 20px;
+            width: 80%;
+        }
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        th {
+            background-color: #05C7F2;
+            color: white;
+            width: 30%;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tr:hover {
+            background-color: #d9d9d9;
+        }
+    </style>
+</head>
+<body>
+    <h1>Informes Personalizados</h1>
+    <table class="table1">
+        <tbody>
+            <tr>
+                <th>Titulo del Proyecto</th>
+                <td th:text="${ruta.id_ruta}"></td>
+            </tr>
+            <tr>
+                <th>Identificacion del Proyecto</th>
+                <td th:text="${ruta.id_estado}"></td>
+            </tr>
+            <tr>
+                <th>Estado</th>
+                <td th:text="${ruta.nombre}"></td>
+            </tr>
+            <tr>
+                <th>Descripción</th>
+                <td th:text="${ruta.descripcion}"></td>
+            </tr>
+            <tr>
+                <th>Docente a cargo</th>
+                <td th:text="${ruta.id_docente}"></td>
+            </tr>
+            <tr>
+                <th>Integrante 1</th>
+                <td th:text="${ruta.id_estudiante}"></td>
+            </tr>
+            <tr>
+                <th>Integrante 2</th>
+                <td th:text="${ruta.id_integrante != null ? ruta.id_integrante : 'N/A'}"></td>
+            </tr>
+            <tr>
+                <th>Integrante 3</th>
+                <td th:text="${ruta.id_integrante2 != null ? ruta.id_integrante2 : 'N/A'}"></td>
+            </tr>
+            </tbody>
+    </table>
+    <table class="table2">
+        <thead>
+        <tr>
+            <th>Id Avance</th>
+            <th>Titulo</th>
+            <th>Descripcion</th>
+            <th>Rubrica</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="avance : ${avances}">
+            <td th:text="${avance.id_avance}"></td>
+            <td th:text="${avance.titulo}"></td>
+            <td th:text="${avance.descripcion}"></td>
+            <td th:text="${avance.rubrica}"></td>
+        </tbody>
+    </table>
+</body>
+</html>

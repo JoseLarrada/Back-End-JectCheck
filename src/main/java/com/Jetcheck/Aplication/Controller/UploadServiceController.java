@@ -19,7 +19,11 @@ public class UploadServiceController {
     private final UploadContentService uploadContentService;
     @GetMapping()
     public ResponseEntity<List<Rutas>> Upload(HttpServletRequest request){
-        return uploadContentService.UploadProjects(request);
+        if (uploadContentService.UploadProjects(request)!=null){
+            return ResponseEntity.ok(uploadContentService.UploadProjects(request));
+        }else{
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     @GetMapping(value = "/profile")

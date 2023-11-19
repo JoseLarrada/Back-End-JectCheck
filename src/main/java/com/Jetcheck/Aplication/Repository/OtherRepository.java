@@ -2,7 +2,6 @@ package com.Jetcheck.Aplication.Repository;
 
 import com.Jetcheck.Aplication.Entity.Avances;
 import com.Jetcheck.Aplication.Entity.Entregas;
-import com.Jetcheck.Aplication.Entity.Rutas;
 import com.Jetcheck.Aplication.Excepcetion.PersonExceptions;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -56,5 +55,4 @@ public class OtherRepository {
         });
         return Assignments;
     }
-
 }

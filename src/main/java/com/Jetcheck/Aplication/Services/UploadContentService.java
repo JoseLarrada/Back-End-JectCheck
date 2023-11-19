@@ -31,20 +31,20 @@ public class UploadContentService {
         }
         return null;
     }
-    public ResponseEntity<List<Rutas>> UploadProjects(HttpServletRequest request){
+    public List<Rutas> UploadProjects(HttpServletRequest request){
         String Username=Validation(request);
         if (Username!=null) {
             int perfil= repositoryJDBC.GetPerfilByUsername(Username);
             if (perfil==1){
                 String id_student=repositoryJDBC.GetIdStudentByUsername(Username);
                 List<Rutas> rutas = repositoryJDBC.GetRoutesById_Student(id_student);
-                return ResponseEntity.ok(rutas);
+                return rutas;
             }else if (perfil==2){
                 List<Rutas> rutas = repositoryJDBC.GetRoutesByUsername(Username);
-                return ResponseEntity.ok(rutas);
+                return rutas;
             }
         }
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        return null;
     }
     public ResponseEntity<Usuarios> UploadProfile(HttpServletRequest request){
        String Username=Validation(request);
