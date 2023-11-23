@@ -10,6 +10,7 @@ import com.Jetcheck.Aplication.Excepcetion.PersonExceptions;
 import com.Jetcheck.Aplication.Repository.RepositoryJDBC;
 import com.Jetcheck.Aplication.Repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -19,6 +20,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class AuthenticationService {
     private final UserRepository repository;
+    private final UserRepository userRepository;
     private final RepositoryJDBC repositoryJDBC;
     private final PasswordEncoder passwordEncoder;
     private final JwtServices jwtService;
@@ -41,7 +43,6 @@ public class AuthenticationService {
                 .ciudad(request.getCity())
                 .correo(request.getEmail())
                 .perfil(request.getProfile())
-                .sexo(request.getSexuality())
                 .role(Role.USER)
                 .build();
         repository.save(user);
@@ -68,7 +69,7 @@ public class AuthenticationService {
                 .Token(jwtToken)
                 .build();
     }
-    public String recoverpassword(RecoverRequest request){
+    public ResponseEntity<String> recoverpassword(RecoverRequest request){
         if (repository.existsById(request.getId())){
             if (repository.existsByCorreo(request.getEmail())){
                 if (request.getPassword().equals(request.getConfirmPassword())){
@@ -76,14 +77,25 @@ public class AuthenticationService {
                             .id(request.getId())
                             .password(passwordEncoder.encode(request.getPassword())).build();
                     repositoryJDBC.updatePassword(usuarios);
-                    return "Contraseña Recuperada satifactoriamente";
+                    return ResponseEntity.ok("Contraseña Recuperada satifactoriamente");
                 }else{
-                    throw new PersonExceptions("Las contraseñas no son iguales");
+                    return ResponseEntity.badRequest().body("Las contraseñas no son iguales");
                 }
             }else{
-                throw new PersonExceptions("Correo Inexistente");
+                return ResponseEntity.badRequest().body("Correo Inexistente");
             }
         }
-        throw new PersonExceptions("El usuario no existe, por favor Registrese en el aplicativo");
+        return ResponseEntity.badRequest().body("El usuario no existe, por favor Registrese en el aplicativo");
+    }
+    public ResponseEntity<String> existUser(AuthenticationRequest request){
+        String nowPassword = request.getPassword();
+        String password = repositoryJDBC.getPasswordByUsername(request.getUsername());
+        if (userRepository.existsByUsername(request.getUsername()) && passwordEncoder.matches(nowPassword, password)){
+            return ResponseEntity.badRequest().body("Ya hay una cuenta asociada a estas credenciales por favor inicie sesion");
+        } else if (userRepository.existsByUsername(request.getUsername())) {
+            return ResponseEntity.badRequest().body("El nombre de usuario se encuentra en uso, ingrese otro");
+        }else{
+            return ResponseEntity.ok("Correcto");
+        }
     }
 }

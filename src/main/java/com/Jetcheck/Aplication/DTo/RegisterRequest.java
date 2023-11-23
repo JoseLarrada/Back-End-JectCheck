@@ -18,5 +18,4 @@ public class RegisterRequest {
     String city;
     String email;
     int profile;
-    int sexuality;
 }

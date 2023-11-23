@@ -35,8 +35,8 @@ public class GeneratorInforme {
         return "Success";
     }
 
-    @PostMapping(value = "/Generate/CustomDocument")
-    public String generateCustomReport(HttpServletRequest request, @RequestParam String Id_Route) {
+    @PostMapping(value = "/Generate/CustomDocument/{Id_Route}")
+    public String generateCustomReport(HttpServletRequest request, @PathVariable String Id_Route) {
         Rutas ruta = routesRepository.findById(Id_Route).orElse(null);
         List<Avances> avances = otherRepository.getAvancesByRoutes(Id_Route);
 

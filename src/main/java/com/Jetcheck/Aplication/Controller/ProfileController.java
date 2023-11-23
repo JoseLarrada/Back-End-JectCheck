@@ -32,8 +32,8 @@ public class ProfileController {
         }
     }
 
-    @DeleteMapping(value = "/DeleteAccount")
-    public ResponseEntity<String> DeleteAccont(String Password, HttpServletRequest request){
+    @DeleteMapping(value = "/DeleteAccount/{Password}")
+    public ResponseEntity<String> DeleteAccont(@PathVariable String Password, HttpServletRequest request){
         return profileServices.DeleteUser(Password,request);
     }
 }

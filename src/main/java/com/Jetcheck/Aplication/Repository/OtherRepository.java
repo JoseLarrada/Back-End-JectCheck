@@ -55,4 +55,34 @@ public class OtherRepository {
         });
         return Assignments;
     }
+    public List<String> getCity(String department) {
+        String sql = "SELECT nombre_ciudad FROM ciudad WHERE nombre_departamento = ?";
+        List<String> cities = jdbcTemplate2.query(sql, new Object[]{department}, (resultSet, rowNum) ->
+                resultSet.getString("nombre_ciudad")
+        );
+        return cities;
+    }
+    public List<String> getDepartments() {
+        String sql = "SELECT * FROM departamentos";
+        List<String> departments = jdbcTemplate2.query(sql, (resultSet, rowNum) ->
+                resultSet.getString("nombre_departamento")
+        );
+        return departments;
+    }
+    public void DeleteFromName(String name){
+        try {
+            String sql="DELETE FROM rutas WHERE nombre= ?";
+            jdbcTemplate2.update(sql,name);
+        }catch (PersonExceptions e){
+            throw new PersonExceptions(e.getMessage()) ;
+        }
+    }
+    public void DeleteAdvanceFromName(String name){
+        try {
+            String sql="DELETE FROM avances WHERE titulo= ?";
+            jdbcTemplate2.update(sql,name);
+        }catch (EmptyResultDataAccessException e){
+            throw new PersonExceptions(e.getMessage()) ;
+        }
+    }
 }

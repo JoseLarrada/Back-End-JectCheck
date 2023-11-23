@@ -30,7 +30,6 @@ public class Usuarios implements UserDetails {
     private String ciudad;
     private String correo;
     private int perfil;
-    private int sexo;
     private String password;
     @Enumerated(EnumType.STRING)
     private Role role;

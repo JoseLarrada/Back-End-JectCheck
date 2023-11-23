@@ -1,11 +1,13 @@
 package com.Jetcheck.Aplication.Services;
 
+import com.Jetcheck.Aplication.Config.IdGeneratorConfig;
 import com.Jetcheck.Aplication.Entity.Rutas;
 import com.itextpdf.html2pdf.ConverterProperties;
 import com.itextpdf.html2pdf.HtmlConverter;
 import com.itextpdf.html2pdf.resolver.font.DefaultFontProvider;
 import com.itextpdf.io.source.ByteArrayOutputStream;
 import com.itextpdf.kernel.pdf.PdfWriter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.io.FileOutputStream;
 import java.util.HashMap;
@@ -15,7 +17,9 @@ import java.util.Map;
 import org.thymeleaf.context.Context;
 
 @Service
+@RequiredArgsConstructor
 public class GeneratorReportService {
+    private final IdGeneratorConfig idGeneratorConfig;
     public String htmlToPdf(String processedHtml) {
 
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
@@ -25,7 +29,8 @@ public class GeneratorReportService {
             ConverterProperties converterProperties = new ConverterProperties();
             converterProperties.setFontProvider(defaultFont);
             HtmlConverter.convertToPdf(processedHtml, pdfwriter, converterProperties);
-            FileOutputStream fout = new FileOutputStream("C:/Users/Usuario/Documents/informe.pdf");
+            String name= String.valueOf(idGeneratorConfig);
+            FileOutputStream fout = new FileOutputStream("C:/Users/Usuario/Documents/informe"+name+".pdf");
             byteArrayOutputStream.writeTo(fout);
             byteArrayOutputStream.close();
             byteArrayOutputStream.flush();

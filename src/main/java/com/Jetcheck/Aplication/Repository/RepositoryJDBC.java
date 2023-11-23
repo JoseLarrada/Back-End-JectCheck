@@ -83,7 +83,7 @@ public class RepositoryJDBC {
         try {
             return jdbcTemplate.queryForObject(sql, new Object[]{username}, String.class);
         } catch (EmptyResultDataAccessException e) {
-            throw new PersonExceptions("El usuario no existe");
+            return "El usuario no existe";
         }
     }
     public void updateUser(Usuarios request){
