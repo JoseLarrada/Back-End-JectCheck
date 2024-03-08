@@ -6,14 +6,12 @@ import com.Jetcheck.Aplication.Entity.Rutas;
 import com.Jetcheck.Aplication.Excepcetion.PersonExceptions;
 import com.Jetcheck.Aplication.Repository.RepositoryJDBC;
 import com.Jetcheck.Aplication.Repository.RoutesRepository;
-import com.Jetcheck.Aplication.Repository.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor

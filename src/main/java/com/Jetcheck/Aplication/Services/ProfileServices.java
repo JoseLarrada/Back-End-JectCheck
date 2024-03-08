@@ -1,7 +1,6 @@
 package com.Jetcheck.Aplication.Services;
 
 import com.Jetcheck.Aplication.DTo.ChangeRequest;
-import com.Jetcheck.Aplication.DTo.RegisterRequest;
 import com.Jetcheck.Aplication.DTo.UpdateUserRequest;
 import com.Jetcheck.Aplication.Entity.Usuarios;
 import com.Jetcheck.Aplication.Excepcetion.PersonExceptions;

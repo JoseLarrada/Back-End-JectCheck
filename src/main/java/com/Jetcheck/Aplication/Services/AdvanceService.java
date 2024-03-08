@@ -6,14 +6,11 @@ import com.Jetcheck.Aplication.Entity.Avances;
 import com.Jetcheck.Aplication.Excepcetion.PersonExceptions;
 import com.Jetcheck.Aplication.Repository.AdvanceRepository;
 import com.Jetcheck.Aplication.Repository.OtherRepository;
-import com.Jetcheck.Aplication.Repository.RepositoryJDBC;
 import com.Jetcheck.Aplication.Repository.RoutesRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 

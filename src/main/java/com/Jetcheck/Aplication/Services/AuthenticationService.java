@@ -56,6 +56,7 @@ public class AuthenticationService {
         if (!repository.existsByUsername(request.getUsername())){
             throw new PersonExceptions("Nombre de usuario no encontrado");
         }
+
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.getUsername(),
@@ -67,6 +68,7 @@ public class AuthenticationService {
         var jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder()
                 .Token(jwtToken)
+                .Perfil(user.getPerfil())
                 .build();
     }
     public ResponseEntity<String> recoverpassword(RecoverRequest request){

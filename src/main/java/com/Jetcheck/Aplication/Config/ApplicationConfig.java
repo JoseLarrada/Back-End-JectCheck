@@ -1,6 +1,5 @@
 package com.Jetcheck.Aplication.Config;
 
-import com.Jetcheck.Aplication.Entity.Usuarios;
 import com.Jetcheck.Aplication.Repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;

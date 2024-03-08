@@ -35,16 +35,16 @@ public class RoutesController {
     public ResponseEntity<String> UpdateRuta(@RequestBody RoutesRequest routesRequest, HttpServletRequest request){
         return routesServices.UpdateAddRuta(routesRequest,request);
     }
-    @PutMapping(value = "/AcceptProject")
-    public ResponseEntity<String> Accept(String id_Route){
-        return routesServices.AcceptProject(id_Route);
+    @PutMapping(value = "/AcceptProject/{idRoute}")
+    public ResponseEntity<String> Accept(@PathVariable String idRoute){
+        return routesServices.AcceptProject(idRoute);
     }
-    @PutMapping(value = "/FinishProject")
-    public ResponseEntity<String>Finish(String id_Route){
-        return routesServices.FinishProject(id_Route);
+    @PutMapping(value = "/FinishProject/{idRoute}")
+    public ResponseEntity<String>Finish(@PathVariable String idRoute){
+        return routesServices.FinishProject(idRoute);
     }
-    @GetMapping(value = "/FilterProject")
-    public ResponseEntity<List<Rutas>> FilterRoutes(int id_state){
-        return routesServices.filterRoutes(id_state);
+    @GetMapping(value = "/FilterProject/{idState}")
+    public ResponseEntity<List<Rutas>> FilterRoutes(@PathVariable String idState){
+        return routesServices.filterRoutes(Integer.parseInt(idState));
     }
 }

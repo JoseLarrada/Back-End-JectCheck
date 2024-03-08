@@ -5,14 +5,10 @@ import com.Jetcheck.Aplication.DTo.AuthenticationResponse;
 import com.Jetcheck.Aplication.DTo.RecoverRequest;
 import com.Jetcheck.Aplication.DTo.RegisterRequest;
 import com.Jetcheck.Aplication.Excepcetion.PersonExceptions;
-import com.Jetcheck.Aplication.Repository.OtherRepository;
-import com.Jetcheck.Aplication.Repository.UserRepository;
 import com.Jetcheck.Aplication.Services.AuthenticationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/auth")

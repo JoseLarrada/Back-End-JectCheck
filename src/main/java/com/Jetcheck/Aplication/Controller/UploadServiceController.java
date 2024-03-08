@@ -2,7 +2,6 @@ package com.Jetcheck.Aplication.Controller;
 
 import com.Jetcheck.Aplication.Entity.Rutas;
 import com.Jetcheck.Aplication.Entity.Usuarios;
-import com.Jetcheck.Aplication.Repository.OtherRepository;
 import com.Jetcheck.Aplication.Services.UploadContentService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;

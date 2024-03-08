@@ -161,7 +161,7 @@ public class RepositoryJDBC {
             throw new PersonExceptions("El usuario no existe");
         }
     }
-    public void uptadestate(int id_state,String id_route){
+    public void uptadestate (int id_state,String id_route){
         try {
             String sql = "UPDATE rutas " +
                     "SET id_estado = ? " +
