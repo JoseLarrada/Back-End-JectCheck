@@ -4,6 +4,7 @@ import com.Jetcheck.Aplication.Config.IdGeneratorConfig;
 import com.Jetcheck.Aplication.DTo.RoutesRequest;
 import com.Jetcheck.Aplication.Entity.Rutas;
 import com.Jetcheck.Aplication.Excepcetion.PersonExceptions;
+import com.Jetcheck.Aplication.Mapper.RoutesMapper;
 import com.Jetcheck.Aplication.Repository.RepositoryJDBC;
 import com.Jetcheck.Aplication.Repository.RoutesRepository;
 import jakarta.servlet.http.HttpServletRequest;
@@ -20,83 +21,65 @@ public class RoutesServices {
     private final IdGeneratorConfig Generate;
     private final UploadContentService uploadContentService;
     private final RepositoryJDBC repositoryJDBC;
-    public ResponseEntity<String> UpdateAddRuta(RoutesRequest request, HttpServletRequest http) {
-        try{
-            String Username=uploadContentService.Validation(http);
-            String id_Estudiante=repositoryJDBC.GetIdStudentByUsername(Username);
-            String idDocente = repositoryJDBC.GetIdTeacherByName(request.getTeacher());
-            existValidation(nullmember1(request.getId_Member()),nullmember2(request.getId_Member2()),Username,idDocente);
-            //Quiero Guardar
-            if (request.getId()==null){
-                UpdateOrSaveRoute(request,idDocente,id_Estudiante, Generate.IdGenerator(),5);
-                return ResponseEntity.ok("Proyecto Guardado Correctamente");
-            }else { //Quiero Actualizar
-                UpdateOrSaveRoute(request,idDocente,id_Estudiante, request.getId(),5);
-                return ResponseEntity.ok("Proyecto Modificado Correctamente");
+    private final RoutesMapper routesMapper;
+    public ResponseEntity<String> addRoute(RoutesRequest request, HttpServletRequest http){
+        try {
+            request.setId(Generate.IdGenerator());
+            if (routesRepository.existsById(request.getId())){
+                return ResponseEntity.badRequest().body("Ya existe un proyecto asociado a este Id");
             }
-
-        }catch(PersonExceptions e){
+            String username=uploadContentService.Validation(http);
+            String id_Estudiante=repositoryJDBC.GetIdStudentByUsername(username);
+            String idDocente = repositoryJDBC.GetIdTeacherByName(request.getTeacher());
+            //Verificacion de autollamado de metodos
+            request.setId_Member(nullMember1(request.getId_Member()));
+            request.setId_Member2(nullMember2(request.getId_Member2()));
+            routesRepository.save(routesMapper.mapperRoutes(request,idDocente,id_Estudiante));
+            return ResponseEntity.ok("Proyecto Guardado Correctamente");
+        }catch (Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
-    private void existValidation(String member1, String member2,String Username,String teacher){
-        if (Username==null){
-            throw new  PersonExceptions("Usuario no encontrado o no disponible");
-        }
-        if (member1 != null && !repositoryJDBC.ExistMember(member1)) {
-            throw new PersonExceptions("Integrante 1 no encontrado");
-        }
-        if (member2 != null && !repositoryJDBC.ExistMember(member2)) {
-            throw new PersonExceptions("Integrante 2 no encontrado");
-        }
-        if (teacher == null || !repositoryJDBC.ExistTeacher(teacher)) {
-            throw new PersonExceptions("Docente no encontrado");
+    public ResponseEntity<String> updateRoute(RoutesRequest request, HttpServletRequest http){
+        try {
+            if (!routesRepository.existsById(request.getId())){
+                return ResponseEntity.badRequest().body("No existe un proyecto asociado a este Id");
+            }
+            String username=uploadContentService.Validation(http);
+            String id_Estudiante=repositoryJDBC.GetIdStudentByUsername(username);
+            String idDocente = repositoryJDBC.GetIdTeacherByName(request.getTeacher());
+            //Verificacion de autollamado de metodos
+            request.setId_Member(nullMember1(request.getId_Member()));
+            request.setId_Member2(nullMember2(request.getId_Member2()));
+            routesRepository.save(routesMapper.mapperRoutes(request,idDocente,id_Estudiante));
+            return ResponseEntity.ok("Proyecto Modificado Correctamente");
+        }catch (Exception e){
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
-    private void UpdateOrSaveRoute(RoutesRequest request, String idDocente, String id_Estudiante,String id_ruta,int estado){
-        var routes= Rutas.builder()
-                .id_ruta(id_ruta)
-                .id_estado(estado)
-                .descripcion(request.getDescription())
-                .id_docente(idDocente)
-                .id_estudiante(id_Estudiante)
-                .nombre(request.getNameRoute())
-                .id_integrante(nullmember1(request.getId_Member()))
-                .id_integrante2(nullmember2(request.getId_Member2()))
-                .build();
-        routesRepository.save(routes);
-    }
-    private String nullmember1(String member1){
+
+    private String nullMember1(String member1){
         if (member1!=null){
             return repositoryJDBC.GetIdStudentByName(member1);
         }else{
             return null;
         }
     }
-    private String nullmember2(String member2){
+    private String nullMember2(String member2){
         if (member2!=null){
             return repositoryJDBC.GetIdStudentByName(member2);
         }else{
             return null;
         }
     }
-    public ResponseEntity<String> DeleteRuta(String id){
-        if (routesRepository.existsById(id)){
-            routesRepository.deleteById(id);
-            return ResponseEntity.ok("Eliminado Correctamente");
-        }
-        else{
-            return ResponseEntity.badRequest().body("No se pudo eliminar");
-        }
-    }
-    public ResponseEntity<String> FinishProject(String Id) {
+    public ResponseEntity<String> finishProject(String Id) {
         if (routesRepository.existsById(Id)){
             repositoryJDBC.uptadestate(2,Id);
             return ResponseEntity.ok("Proyecto finalizado Correctamente");
         }
         return ResponseEntity.notFound().build();
     }
-    public ResponseEntity<String> AcceptProject(String Id){
+    public ResponseEntity<String> acceptProject(String Id){
         if (routesRepository.existsById(Id)){
             if (repositoryJDBC.getstatebyId(Id)==5){
                 repositoryJDBC.uptadestate(1,Id);

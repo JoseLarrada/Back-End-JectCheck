@@ -7,7 +7,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ChangeRequest {
-    String NowPassword;
-    String NewPassword;
-    String ConfirmPassword;
+    String nowPassword;
+    String newPassword;
+    String confirmPassword;
 }

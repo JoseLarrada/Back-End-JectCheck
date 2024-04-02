@@ -13,6 +13,6 @@ public class AdvanceRequest {
     String tittle;
     String description;
     String rubric;
-    String route_id;
-    String advance_id;
+    String routeId;
+    String advanceId;
 }

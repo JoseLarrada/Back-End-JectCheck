@@ -18,11 +18,11 @@ public class RoutesController {
     private final RoutesServices routesServices;
     private final OtherRepository otherRepository;
     @PostMapping(value = "/CreateRoute")
-    public ResponseEntity<String> CreateRuta(@RequestBody RoutesRequest routesRequest, HttpServletRequest request){
-        return routesServices.UpdateAddRuta(routesRequest,request);
+    public ResponseEntity<String> createRuta(@RequestBody RoutesRequest routesRequest, HttpServletRequest request){
+        return routesServices.addRoute(routesRequest,request);
     }
     @DeleteMapping(value = "/DeleteRoute/{name}")
-    public ResponseEntity<String> DeleteRute(@PathVariable String name){
+    public ResponseEntity<String> deleteRute(@PathVariable String name){
         try {
             otherRepository.DeleteFromName(name);
             return ResponseEntity.ok().body("Eliminado Correctamente");
@@ -32,19 +32,19 @@ public class RoutesController {
 
     }
     @PutMapping(value = "/UpdateRoute")
-    public ResponseEntity<String> UpdateRuta(@RequestBody RoutesRequest routesRequest, HttpServletRequest request){
-        return routesServices.UpdateAddRuta(routesRequest,request);
+    public ResponseEntity<String> updateRuta(@RequestBody RoutesRequest routesRequest, HttpServletRequest request){
+        return routesServices.updateRoute(routesRequest,request);
     }
     @PutMapping(value = "/AcceptProject/{idRoute}")
-    public ResponseEntity<String> Accept(@PathVariable String idRoute){
-        return routesServices.AcceptProject(idRoute);
+    public ResponseEntity<String> accept(@PathVariable String idRoute){
+        return routesServices.acceptProject(idRoute);
     }
     @PutMapping(value = "/FinishProject/{idRoute}")
-    public ResponseEntity<String>Finish(@PathVariable String idRoute){
-        return routesServices.FinishProject(idRoute);
+    public ResponseEntity<String> finish(@PathVariable String idRoute){
+        return routesServices.finishProject(idRoute);
     }
     @GetMapping(value = "/FilterProject/{idState}")
-    public ResponseEntity<List<Rutas>> FilterRoutes(@PathVariable String idState){
+    public ResponseEntity<List<Rutas>> filterRoutes(@PathVariable String idState){
         return routesServices.filterRoutes(Integer.parseInt(idState));
     }
 }

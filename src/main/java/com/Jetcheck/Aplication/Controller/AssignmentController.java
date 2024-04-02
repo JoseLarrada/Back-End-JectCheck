@@ -16,22 +16,22 @@ public class AssignmentController {
     private final AssignmentServices assignmentServices;
     @PostMapping("/addAssignment")
     public ResponseEntity<String> createAssignment(@RequestBody AssignmentRequest request){
-        return assignmentServices.AddAssignment(request);
+        return assignmentServices.addAssignment(request);
     }
     @PutMapping("/UpdateAssignment")
     public ResponseEntity<String> updateAssignment(@RequestBody AssignmentRequest request){
-        return assignmentServices.ModifyAssignment(request);
+        return assignmentServices.modifyAssignment(request);
     }
     @DeleteMapping("/DeleteAssignment")
     public ResponseEntity<String> deleteAssignment(@RequestParam String Id_Assignment){
-        return assignmentServices.DeleteAssignment(Id_Assignment);
+        return assignmentServices.deleteAssignment(Id_Assignment);
     }
     @PutMapping("/RateAssignment")
-    public ResponseEntity<String> Rate(@RequestParam double rate, @RequestParam String Id_Assignment){
-        return assignmentServices.RateAssignment(rate,Id_Assignment);
+    public ResponseEntity<String> rate(@RequestParam double rate, @RequestParam String Id_Assignment){
+        return assignmentServices.rateAssignment(rate,Id_Assignment);
     }
     @GetMapping("/LoadAssignment")
-    public ResponseEntity<List<Entregas>> LoadAssignment(@RequestParam String id_advance){
-        return assignmentServices.DeployAssignment(id_advance);
+    public ResponseEntity<List<Entregas>> loadAssignment(@RequestParam String id_advance){
+        return assignmentServices.deployAssignment(id_advance);
     }
 }

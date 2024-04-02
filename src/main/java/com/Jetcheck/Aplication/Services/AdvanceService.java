@@ -4,6 +4,7 @@ import com.Jetcheck.Aplication.Config.IdGeneratorConfig;
 import com.Jetcheck.Aplication.DTo.AdvanceRequest;
 import com.Jetcheck.Aplication.Entity.Avances;
 import com.Jetcheck.Aplication.Excepcetion.PersonExceptions;
+import com.Jetcheck.Aplication.Mapper.AdvanceMapper;
 import com.Jetcheck.Aplication.Repository.AdvanceRepository;
 import com.Jetcheck.Aplication.Repository.OtherRepository;
 import com.Jetcheck.Aplication.Repository.RoutesRepository;
@@ -21,44 +22,34 @@ public class AdvanceService {
     private final IdGeneratorConfig Generate;
     private final AdvanceRepository advanceRepository;
     private final OtherRepository advance;
+    private final AdvanceMapper advanceMapper;
 
-    public ResponseEntity<String> CreateAdvance(AdvanceRequest request){
-        if (!routesRepository.existsById(request.getRoute_id())){
+    public ResponseEntity<String> createAdvance(AdvanceRequest request){
+        if (!routesRepository.existsById(request.getRouteId())){
             throw new PersonExceptions("Ruta inexistente");
         }
-        saveorupdate(request,Generate.IdGenerator());
+        request.setAdvanceId(Generate.IdGenerator());
+        advanceRepository.save(advanceMapper.mapperAdvance(request));
         return ResponseEntity.ok("Creado Correctamente");
     }
-    public ResponseEntity<String> UpdateAdvance(AdvanceRequest request){
-        if (!advanceRepository.existsById(request.getAdvance_id())){
+    public ResponseEntity<String> updateAdvance(AdvanceRequest request){
+        if (!advanceRepository.existsById(request.getAdvanceId())){
             return ResponseEntity.badRequest().body("No existe el avance");
         }
-        if (advance.Getstatebyadvance(request.getAdvance_id())==3){
+        if (advance.Getstatebyadvance(request.getAdvanceId())==3){
             return ResponseEntity.badRequest().body("El avance ya ha sido calificado");
         }
-        saveorupdate(request, request.getAdvance_id());
+        advanceRepository.save(advanceMapper.mapperAdvance(request));
         return ResponseEntity.ok("Modificado Correctamente");
     }
-    public ResponseEntity<String> DeleteAvance(String id_Advance){
+    public ResponseEntity<String> deleteAvance(String id_Advance){
         if (advanceRepository.existsById(id_Advance)){
             advanceRepository.deleteById(id_Advance);
             return ResponseEntity.ok("Eliminado Correctamente");
         }
         return ResponseEntity.notFound().build();
     }
-    private void saveorupdate(AdvanceRequest request,String id){
-        var advance= Avances.builder()
-                .id_avance(id)
-                .id_estado(5)
-                .fecha_creacion(new Date())
-                .id_ruta(request.getRoute_id())
-                .descripcion(request.getDescription())
-                .rubrica(request.getRubric())
-                .titulo(request.getTittle())
-                .build();
-        advanceRepository.save(advance);
-    }
-    public ResponseEntity<List<Avances>> DeployAdvances(String id_Route){
+    public ResponseEntity<List<Avances>> deployAdvances(String id_Route){
         return ResponseEntity.ok(advance.getAvancesByRoutes(id_Route));
     }
 }

@@ -18,16 +18,16 @@ public class AdvanceController {
     private final AdvanceService advanceService;
     private final OtherRepository otherRepository;
     @PostMapping(value = "/createadvance")
-    public ResponseEntity<String> CreateAdvance(@RequestBody AdvanceRequest advanceRequest){
-        return advanceService.CreateAdvance(advanceRequest);
+    public ResponseEntity<String> createAdvance(@RequestBody AdvanceRequest advanceRequest){
+        return advanceService.createAdvance(advanceRequest);
     }
 
     @PutMapping(value = "/updateadvance")
-    public ResponseEntity<String> UpdateAdvance(@RequestBody AdvanceRequest advanceRequest){
-        return advanceService.UpdateAdvance(advanceRequest);
+    public ResponseEntity<String> updateAdvance(@RequestBody AdvanceRequest advanceRequest){
+        return advanceService.updateAdvance(advanceRequest);
     }
     @DeleteMapping(value = "/deleteadvance/{id}")
-    public ResponseEntity<String> DeleteAdvance(@PathVariable String id){
+    public ResponseEntity<String> deleteAdvance(@PathVariable String id){
         try{
             otherRepository.DeleteAdvanceFromName(id);
             return ResponseEntity.ok("Eliminado Correctamente");
@@ -36,7 +36,7 @@ public class AdvanceController {
         }
     }
     @GetMapping(value = "/chargueadvances/{id_route}")
-    public ResponseEntity<List<Avances>> chargueadvances(@PathVariable String id_route){
-        return  advanceService.DeployAdvances(id_route);
+    public ResponseEntity<List<Avances>> chargueAdvances(@PathVariable String id_route){
+        return  advanceService.deployAdvances(id_route);
     }
 }

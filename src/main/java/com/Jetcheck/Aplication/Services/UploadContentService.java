@@ -22,7 +22,7 @@ public class UploadContentService {
     private final UserRepository userRepository;
 
     public String Validation(HttpServletRequest request){
-        String Token=jwtService.TokenModify(request);
+        String Token=jwtService.tokenModify(request);
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (jwtService.isTokenValid(Token, userDetails)) {
             String Username = jwtService.extractUsername(Token);

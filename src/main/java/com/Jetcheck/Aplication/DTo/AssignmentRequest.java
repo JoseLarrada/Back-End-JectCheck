@@ -10,9 +10,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AssignmentRequest {
-    String id_advance;
+    String idAdvance;
     String annexes;
     String file;
     String comment;
-    String id_Assignment;
+    String idAssignment;
 }

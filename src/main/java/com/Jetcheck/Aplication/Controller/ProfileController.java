@@ -1,7 +1,6 @@
 package com.Jetcheck.Aplication.Controller;
 
 import com.Jetcheck.Aplication.DTo.ChangeRequest;
-import com.Jetcheck.Aplication.DTo.RegisterRequest;
 import com.Jetcheck.Aplication.DTo.UpdateUserRequest;
 import com.Jetcheck.Aplication.Excepcetion.PersonExceptions;
 import com.Jetcheck.Aplication.Services.ProfileServices;
@@ -18,7 +17,7 @@ public class ProfileController {
     @PutMapping(value = "/ChangePassword")
     public ResponseEntity<String> changePassword(@RequestBody ChangeRequest changeRequest,HttpServletRequest request){
         try{
-            return profileServices.ChangePassword(changeRequest,request);
+            return profileServices.changePassword(changeRequest,request);
         }catch (PersonExceptions e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }
@@ -26,7 +25,7 @@ public class ProfileController {
     @PutMapping(value = "/UpdateUser")
     public ResponseEntity<String> updateuser(@RequestBody UpdateUserRequest UpdateRequest, HttpServletRequest request){
         try{
-            return profileServices.UpdateUser(UpdateRequest,request);
+            return profileServices.updateUser(UpdateRequest,request);
         }catch (PersonExceptions e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }
@@ -34,6 +33,6 @@ public class ProfileController {
 
     @DeleteMapping(value = "/DeleteAccount/{Password}")
     public ResponseEntity<String> DeleteAccont(@PathVariable String Password, HttpServletRequest request){
-        return profileServices.DeleteUser(Password,request);
+        return profileServices.deleteUser(Password,request);
     }
 }

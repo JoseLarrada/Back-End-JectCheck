@@ -40,11 +40,11 @@ public class GeneratorReportService {
             return ex.getMessage();
         }
     }
-    public Context setData(List<Rutas> RoutesList) {
+    public Context setData(List<Rutas> routesList) {
 
         Context context = new Context();
         Map<String, Object> data = new HashMap<>();
-        data.put("Rutas", RoutesList);
+        data.put("Rutas", routesList);
         context.setVariables(data);
         return context;
     }

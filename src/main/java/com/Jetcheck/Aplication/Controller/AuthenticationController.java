@@ -44,7 +44,7 @@ public class AuthenticationController {
     @PutMapping(value = "/recoverypassword")
     public ResponseEntity<String> recovery(@RequestBody RecoverRequest request){
         try {
-            return service.recoverpassword(request);
+            return service.recoverPassword(request);
         }catch (PersonExceptions e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }

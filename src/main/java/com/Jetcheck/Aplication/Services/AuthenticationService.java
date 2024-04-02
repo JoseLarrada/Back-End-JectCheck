@@ -4,9 +4,8 @@ import com.Jetcheck.Aplication.DTo.AuthenticationRequest;
 import com.Jetcheck.Aplication.DTo.AuthenticationResponse;
 import com.Jetcheck.Aplication.DTo.RecoverRequest;
 import com.Jetcheck.Aplication.DTo.RegisterRequest;
-import com.Jetcheck.Aplication.Entity.Role;
-import com.Jetcheck.Aplication.Entity.Usuarios;
 import com.Jetcheck.Aplication.Excepcetion.PersonExceptions;
+import com.Jetcheck.Aplication.Mapper.AuthenticationMapper;
 import com.Jetcheck.Aplication.Repository.RepositoryJDBC;
 import com.Jetcheck.Aplication.Repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +24,7 @@ public class AuthenticationService {
     private final PasswordEncoder passwordEncoder;
     private final JwtServices jwtService;
     private final AuthenticationManager authenticationManager;
+    private final AuthenticationMapper authenticationMapper;
     public AuthenticationResponse register(RegisterRequest request) {
         if (repository.existsByUsername(request.getUsername())){
             throw new PersonExceptions("El nombre de usuario ya existe ingrese otro");
@@ -34,19 +34,8 @@ public class AuthenticationService {
             throw new PersonExceptions("Esta identificacion ya tiene un usuario asignado");
         }
 
-        var user = Usuarios.builder()
-                .id(request.getId())
-                .username(request.getUsername())
-                .password(passwordEncoder.encode(request.getPassword()))
-                .nombres(request.getName())
-                .apellidos(request.getLastname())
-                .ciudad(request.getCity())
-                .correo(request.getEmail())
-                .perfil(request.getProfile())
-                .role(Role.USER)
-                .build();
-        repository.save(user);
-        var jwtToken = jwtService.generateToken(user);
+        repository.save(authenticationMapper.mapperRegister(request));
+        var jwtToken = jwtService.generateToken(authenticationMapper.mapperRegister(request));
         return AuthenticationResponse.builder()
                 .Token(jwtToken)
                 .build();
@@ -71,14 +60,11 @@ public class AuthenticationService {
                 .Perfil(user.getPerfil())
                 .build();
     }
-    public ResponseEntity<String> recoverpassword(RecoverRequest request){
+    public ResponseEntity<String> recoverPassword(RecoverRequest request){
         if (repository.existsById(request.getId())){
             if (repository.existsByCorreo(request.getEmail())){
                 if (request.getPassword().equals(request.getConfirmPassword())){
-                    Usuarios usuarios= Usuarios.builder()
-                            .id(request.getId())
-                            .password(passwordEncoder.encode(request.getPassword())).build();
-                    repositoryJDBC.updatePassword(usuarios);
+                    repositoryJDBC.updatePassword(authenticationMapper.recoverMapper(request));
                     return ResponseEntity.ok("Contraseña Recuperada satifactoriamente");
                 }else{
                     return ResponseEntity.badRequest().body("Las contraseñas no son iguales");

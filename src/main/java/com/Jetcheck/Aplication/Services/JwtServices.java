@@ -1,6 +1,5 @@
 package com.Jetcheck.Aplication.Services;
 
-import com.Jetcheck.Aplication.Excepcetion.PersonExceptions;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -11,8 +10,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.security.Key;
-import java.security.SecureRandom;
-import java.util.Base64;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -83,7 +80,7 @@ public class JwtServices {
         byte[] keyBytes = Decoders.BASE64.decode(SECRET_KEY);
         return Keys.hmacShaKeyFor(keyBytes);
     }
-    public String TokenModify(HttpServletRequest request){
+    public String tokenModify(HttpServletRequest request){
         String authHeader = request.getHeader("Authorization");
         String Token = null;
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
