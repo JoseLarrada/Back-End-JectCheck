@@ -5,19 +5,22 @@ import com.Jetcheck.Aplication.DTo.RegisterRequest;
 import com.Jetcheck.Aplication.DTo.UpdateUserRequest;
 import com.Jetcheck.Aplication.Entity.Role;
 import com.Jetcheck.Aplication.Entity.Usuarios;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
-@RequiredArgsConstructor
+@NoArgsConstructor
 public class AuthenticationMapper {
-    private final PasswordEncoder passwordEncoder;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
     public Usuarios mapperRegister(RegisterRequest registerRequest){
         return Usuarios.builder()
                 .id(registerRequest.getId())
                 .username(registerRequest.getUsername())
-                .password(passwordEncoder.encode(registerRequest.getPassword()))
+                .password(registerRequest.getPassword())
                 .nombres(registerRequest.getName())
                 .apellidos(registerRequest.getLastname())
                 .ciudad(registerRequest.getCity())
@@ -30,7 +33,7 @@ public class AuthenticationMapper {
     public Usuarios recoverMapper(RecoverRequest recoverRequest){
         return Usuarios.builder()
                 .id(recoverRequest.getId())
-                .password(passwordEncoder.encode(recoverRequest.getPassword())).build();
+                .password(recoverRequest.getPassword()).build();
     }
 
     public Usuarios mapperUpdate(UpdateUserRequest updateUserRequest, String username){

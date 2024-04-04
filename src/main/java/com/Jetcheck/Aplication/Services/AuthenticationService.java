@@ -18,7 +18,6 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class AuthenticationService {
-    private final UserRepository repository;
     private final UserRepository userRepository;
     private final RepositoryJDBC repositoryJDBC;
     private final PasswordEncoder passwordEncoder;
@@ -26,23 +25,30 @@ public class AuthenticationService {
     private final AuthenticationManager authenticationManager;
     private final AuthenticationMapper authenticationMapper;
     public AuthenticationResponse register(RegisterRequest request) {
-        if (repository.existsByUsername(request.getUsername())){
+        if (userRepository.existsByUsername(request.getUsername())){
             throw new PersonExceptions("El nombre de usuario ya existe ingrese otro");
-        } else if (repository.existsByCorreo(request.getEmail())) {
+        } else if (userRepository.existsByCorreo(request.getEmail())) {
             throw new PersonExceptions("El correo ya existe ingrese otro");
-        } else if (repository.existsById(request.getId())) {
+        } else if (userRepository.existsById(request.getId())) {
             throw new PersonExceptions("Esta identificacion ya tiene un usuario asignado");
         }
+        if (request.getUsername()==null){
+            throw new PersonExceptions("Ingrese un valor valido");
+        }
+        //Codificar Contraseña
+        String passEncode = passwordEncoder.encode(request.getPassword());
+        request.setPassword(passEncode);
 
-        repository.save(authenticationMapper.mapperRegister(request));
+        userRepository.save(authenticationMapper.mapperRegister(request));
         var jwtToken = jwtService.generateToken(authenticationMapper.mapperRegister(request));
         return AuthenticationResponse.builder()
                 .Token(jwtToken)
+                .Perfil(request.getProfile())
                 .build();
     }
 
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
-        if (!repository.existsByUsername(request.getUsername())){
+        if (!userRepository.existsByUsername(request.getUsername())){
             throw new PersonExceptions("Nombre de usuario no encontrado");
         }
 
@@ -52,7 +58,7 @@ public class AuthenticationService {
                         request.getPassword()
                 )
         );
-        var user = repository.findByUsername(request.getUsername())
+        var user = userRepository.findByUsername(request.getUsername())
                 .orElseThrow();
         var jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder()
@@ -61,9 +67,13 @@ public class AuthenticationService {
                 .build();
     }
     public ResponseEntity<String> recoverPassword(RecoverRequest request){
-        if (repository.existsById(request.getId())){
-            if (repository.existsByCorreo(request.getEmail())){
+        if (userRepository.existsById(request.getId())){
+            if (userRepository.existsByCorreo(request.getEmail())){
                 if (request.getPassword().equals(request.getConfirmPassword())){
+                    //Codificar Contraseña
+                    String passEncode = passwordEncoder.encode(request.getPassword());
+                    request.setPassword(passEncode);
+
                     repositoryJDBC.updatePassword(authenticationMapper.recoverMapper(request));
                     return ResponseEntity.ok("Contraseña Recuperada satifactoriamente");
                 }else{
