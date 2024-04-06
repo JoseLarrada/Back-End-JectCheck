@@ -18,11 +18,14 @@ import java.util.List;
 public class AssignmentServices {
     private final AssignmentRepository assignmentRepository;
     private final AdvanceRepository advanceRepository;
-    private final OtherRepository AssignmentJDBC;
+    private final OtherRepository assignmentJDBC;
     private final IdGeneratorConfig idGeneratorConfig;
     private final AssignmentMapper assignmentMapper;
 
     public ResponseEntity<String> addAssignment(AssignmentRequest request){
+        if (request.getFile()==null){
+            return ResponseEntity.badRequest().body("Ingrese un archivo valido");
+        }
         if (!advanceRepository.existsById(request.getIdAdvance())){
             return ResponseEntity.badRequest().body("No existe el Avance");
         }
@@ -34,30 +37,38 @@ public class AssignmentServices {
         if (!advanceRepository.existsById(request.getIdAdvance())){
             return ResponseEntity.badRequest().body("No existe el Avance");
         }
-        if (AssignmentJDBC.Getstatebyadvance(request.getIdAdvance())==3){
+        if (assignmentJDBC.Getstatebyadvance(request.getIdAdvance())==3){
             return ResponseEntity.badRequest().body("La entrega Ya fue calificada");
         }
         assignmentRepository.save(assignmentMapper.mapperAssignment(request));
         return ResponseEntity.ok("Entrega Modificada");
     }
-    public ResponseEntity<String> deleteAssignment(String Id){
-        if (assignmentRepository.existsById(Id)){
-            assignmentRepository.deleteById(Id);
+    public ResponseEntity<String> deleteAssignment(String id){
+        if (id==null){return ResponseEntity.badRequest().body("Ingrese un valor");}
+        if (assignmentRepository.existsById(id)){
+            assignmentRepository.deleteById(id);
             return ResponseEntity.ok("Eliminado Correctamente");
         }else{
             return ResponseEntity.badRequest().body("No se encontro Entrega");
         }
-
     }
-    public ResponseEntity<String> rateAssignment(double Rate, String IdAssignment){
-        if (assignmentRepository.existsById(IdAssignment)){
-            AssignmentJDBC.rateprogress(Rate,IdAssignment);
+    public ResponseEntity<String> rateAssignment(double rate, String idAssignment){
+        if (idAssignment==null){
+            return ResponseEntity.badRequest().body("Ingrese un valor");
+        }
+        if (rate>5.0){
+            return ResponseEntity.badRequest().body("La nota maxima es de 5.0");
+        }else if (rate<0){
+            return ResponseEntity.badRequest().body("La nota minma es de 0");
+        }
+        if (assignmentRepository.existsById(idAssignment)){
+            assignmentJDBC.rateprogress(rate,idAssignment);
             return ResponseEntity.ok("Calificado Correctamente");
         }else{
             return ResponseEntity.badRequest().body("No se Encontro el Id");
         }
     }
     public ResponseEntity<List<Entregas>> deployAssignment(String id_advance){
-        return ResponseEntity.ok(AssignmentJDBC.getAssigmentByAdvance(id_advance));
+        return ResponseEntity.ok(assignmentJDBC.getAssigmentByAdvance(id_advance));
     }
 }

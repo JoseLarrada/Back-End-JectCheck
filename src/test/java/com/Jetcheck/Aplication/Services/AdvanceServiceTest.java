@@ -133,8 +133,6 @@ class AdvanceServiceTest {
     void deleteAvanceWithNullId() {
         String identification=null;
 
-        //when(advanceRepository.existsById(identification)).thenReturn(false);
-
         ResponseEntity<String> response=advanceService.deleteAvance(identification);
 
         assertEquals(HttpStatus.BAD_REQUEST,response.getStatusCode());

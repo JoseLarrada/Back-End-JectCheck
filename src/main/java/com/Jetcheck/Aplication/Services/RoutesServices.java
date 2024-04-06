@@ -58,14 +58,14 @@ public class RoutesServices {
         }
     }
 
-    private String nullMember1(String member1){
+    public String nullMember1(String member1){
         if (member1!=null){
             return repositoryJDBC.GetIdStudentByName(member1);
         }else{
             return null;
         }
     }
-    private String nullMember2(String member2){
+    public String nullMember2(String member2){
         if (member2!=null){
             return repositoryJDBC.GetIdStudentByName(member2);
         }else{
@@ -73,11 +73,18 @@ public class RoutesServices {
         }
     }
     public ResponseEntity<String> finishProject(String Id) {
-        if (routesRepository.existsById(Id)){
-            repositoryJDBC.uptadestate(2,Id);
-            return ResponseEntity.ok("Proyecto finalizado Correctamente");
+        if (Id==null){
+            return ResponseEntity.badRequest().body("Ingrese un Valor valido");
         }
-        return ResponseEntity.notFound().build();
+        if (routesRepository.existsById(Id)){
+            if (repositoryJDBC.getstatebyId(Id)==1){
+                repositoryJDBC.uptadestate(2,Id);
+                return ResponseEntity.ok("Proyecto finalizado Correctamente");
+            }else{
+                return ResponseEntity.badRequest().body("El proyecto ya ha sido finalizado");
+            }
+        }
+        return ResponseEntity.badRequest().body("El proyecto no existe");
     }
     public ResponseEntity<String> acceptProject(String Id){
         if (routesRepository.existsById(Id)){
@@ -85,7 +92,7 @@ public class RoutesServices {
                 repositoryJDBC.uptadestate(1,Id);
                 return ResponseEntity.ok("Proyecto aceptado");
             }else{
-                ResponseEntity.badRequest().body("El proyecto ya ha sido aceptado");
+                return ResponseEntity.badRequest().body("El proyecto ya ha sido aceptado");
             }
         }
         return ResponseEntity.notFound().build();
