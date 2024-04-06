@@ -25,15 +25,18 @@ public class AuthenticationService {
     private final AuthenticationManager authenticationManager;
     private final AuthenticationMapper authenticationMapper;
     public AuthenticationResponse register(RegisterRequest request) {
+        if (request.getUsername()==null){
+            throw new PersonExceptions("Ingrese nombre de usario valido");
+        }
+        if (request.getPassword()==null){
+            throw new PersonExceptions("Ingrese una contraseña valida");
+        }
         if (userRepository.existsByUsername(request.getUsername())){
             throw new PersonExceptions("El nombre de usuario ya existe ingrese otro");
         } else if (userRepository.existsByCorreo(request.getEmail())) {
             throw new PersonExceptions("El correo ya existe ingrese otro");
         } else if (userRepository.existsById(request.getId())) {
             throw new PersonExceptions("Esta identificacion ya tiene un usuario asignado");
-        }
-        if (request.getUsername()==null){
-            throw new PersonExceptions("Ingrese un valor valido");
         }
         //Codificar Contraseña
         String passEncode = passwordEncoder.encode(request.getPassword());
@@ -48,7 +51,7 @@ public class AuthenticationService {
     }
 
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
-        if (!userRepository.existsByUsername(request.getUsername())){
+        if (!userRepository.existsByUsername(request.getUsername()) || request.getUsername()==null){
             throw new PersonExceptions("Nombre de usuario no encontrado");
         }
 
@@ -96,4 +99,5 @@ public class AuthenticationService {
             return ResponseEntity.ok("Correcto");
         }
     }
+
 }

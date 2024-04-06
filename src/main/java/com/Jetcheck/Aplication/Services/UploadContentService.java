@@ -47,7 +47,7 @@ public class UploadContentService {
     }
     public ResponseEntity<Usuarios> UploadProfile(HttpServletRequest request){
        String Username=Validation(request);
-       Optional<Usuarios> UsuarioOpt= userRepository.findByUsername(Username);
-       return  UsuarioOpt.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+       Optional<Usuarios> usuarioOpt= userRepository.findByUsername(Username);
+       return  usuarioOpt.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 }

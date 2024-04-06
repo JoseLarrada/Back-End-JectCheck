@@ -25,6 +25,12 @@ public class AdvanceService {
     private final AdvanceMapper advanceMapper;
 
     public ResponseEntity<String> createAdvance(AdvanceRequest request){
+        if (request.getTittle()==null ){
+            return ResponseEntity.badRequest().body("Añada un titulo al proyecto");
+        }
+        if (request.getDescription()==null){
+            return ResponseEntity.badRequest().body("Añada una descripcion al proyecto");
+        }
         if (!routesRepository.existsById(request.getRouteId())){
             throw new PersonExceptions("Ruta inexistente");
         }
@@ -32,7 +38,14 @@ public class AdvanceService {
         advanceRepository.save(advanceMapper.mapperAdvance(request));
         return ResponseEntity.ok("Creado Correctamente");
     }
+
     public ResponseEntity<String> updateAdvance(AdvanceRequest request){
+        if (request.getTittle()==null ){
+            return ResponseEntity.badRequest().body("Añada un titulo al proyecto");
+        }
+        if (request.getDescription()==null){
+            return ResponseEntity.badRequest().body("Añada una descripcion al proyecto");
+        }
         if (!advanceRepository.existsById(request.getAdvanceId())){
             return ResponseEntity.badRequest().body("No existe el avance");
         }
@@ -42,14 +55,20 @@ public class AdvanceService {
         advanceRepository.save(advanceMapper.mapperAdvance(request));
         return ResponseEntity.ok("Modificado Correctamente");
     }
+
     public ResponseEntity<String> deleteAvance(String id_Advance){
+        if (id_Advance==null){
+            return ResponseEntity.badRequest().body("Añada un id valido");
+        }
         if (advanceRepository.existsById(id_Advance)){
             advanceRepository.deleteById(id_Advance);
             return ResponseEntity.ok("Eliminado Correctamente");
         }
-        return ResponseEntity.notFound().build();
+        return ResponseEntity.badRequest().body("No existe un avance asociado");
     }
+
     public ResponseEntity<List<Avances>> deployAdvances(String id_Route){
         return ResponseEntity.ok(advance.getAvancesByRoutes(id_Route));
     }
+
 }

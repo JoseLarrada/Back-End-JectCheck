@@ -1,5 +1,6 @@
 package com.Jetcheck.Aplication.Services;
 
+import com.Jetcheck.Aplication.DTo.AuthenticationRequest;
 import com.Jetcheck.Aplication.DTo.AuthenticationResponse;
 import com.Jetcheck.Aplication.DTo.RegisterRequest;
 import com.Jetcheck.Aplication.Entity.Role;
@@ -15,7 +16,12 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
@@ -64,10 +70,9 @@ class AuthenticationServiceTest {
     }
 
     @Test
-    public void register_withNullUsername_shouldThrowException() {
+    public void register_withNullUsername() {
         // Inicialización
         RegisterRequest request = new RegisterRequest("12344", null, "hola", "Jose", "Larrada", "Maicao", "jose@mail.com", 1);
-        Usuarios user = new Usuarios("12344", null, "Larrada", "Jose", "Maicao", "jose@mail.com", 1, "Contrasena", Role.USER);
 
         // Simulación de los métodos del repositorio
         when(userRepository.existsByUsername(request.getUsername())).thenReturn(false);
@@ -80,18 +85,84 @@ class AuthenticationServiceTest {
         });
 
         // Resultado
-        String expectedMessage = "Ingrese un valor valido";
+        String expectedMessage = "Ingrese nombre de usario valido";
         String actualMessage = exception.getMessage();
 
         assertTrue(actualMessage.contains(expectedMessage));
     }
 
-
     @Test
-    void authenticate() {
+    public void register_withNullPassword() {
+        // Inicialización
+        RegisterRequest request = new RegisterRequest("12344", "skay0340", null, "Jose", "Larrada", "Maicao", "jose@mail.com", 1);
+
+        // Simulación de los métodos del repositorio
+        when(userRepository.existsByUsername(request.getUsername())).thenReturn(false);
+        when(userRepository.existsByCorreo(request.getEmail())).thenReturn(false);
+        when(userRepository.existsById(request.getId())).thenReturn(false);
+
+        // Cuerpo
+        Exception exception = assertThrows(PersonExceptions.class, () -> {
+            authenticationService.register(request);
+        });
+
+        // Resultado
+        String expectedMessage = "Ingrese una contraseña valida";
+        String actualMessage = exception.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage));
+    }
+    @Test
+    public void register_withUserExist(){
+        RegisterRequest request = new RegisterRequest("12344", "skay0340", "hola", "Jose", "Larrada", "Maicao", "jose@mail.com", 1);
+        when(userRepository.existsByUsername(request.getUsername())).thenReturn(true);
+
+        Exception exception = assertThrows(PersonExceptions.class, () -> {
+            authenticationService.register(request);
+        });
+
+        String expectedMessage = "El nombre de usuario ya existe ingrese otro";
+        String actualMessage = exception.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage));
+
     }
 
     @Test
-    void recoverPassword() {
+    public void register_withEmailExist(){
+        RegisterRequest request = new RegisterRequest("12344", "skay0340", "hola", "Jose", "Larrada", "Maicao", "jose@mail.com", 1);
+
+        when(userRepository.existsByUsername(request.getUsername())).thenReturn(false);
+        when(userRepository.existsByCorreo(request.getEmail())).thenReturn(true);
+
+
+        Exception exception = assertThrows(PersonExceptions.class, () -> {
+            authenticationService.register(request);
+        });
+
+        String expectedMessage = "El correo ya existe ingrese otro";
+        String actualMessage = exception.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage));
+
+    }
+
+    @Test
+    public void register_withIdentificationExist(){
+        RegisterRequest request = new RegisterRequest("12344", "skay0340", "hola", "Jose", "Larrada", "Maicao", "jose@mail.com", 1);
+
+        when(userRepository.existsByUsername(request.getUsername())).thenReturn(false);
+        when(userRepository.existsByCorreo(request.getEmail())).thenReturn(false);
+        when(userRepository.existsById(request.getId())).thenReturn(true);
+
+        Exception exception = assertThrows(PersonExceptions.class, () -> {
+            authenticationService.register(request);
+        });
+
+        String expectedMessage = "Esta identificacion ya tiene un usuario asignado";
+        String actualMessage = exception.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage));
+
     }
 }
