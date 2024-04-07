@@ -70,7 +70,7 @@ class AdvanceServiceTest {
 
         ResponseEntity<String> response = advanceService.createAdvance(request);
 
-        String spectedMessage="Añada un titulo al proyecto";
+        String spectedMessage="Añada un titulo al avance";
 
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
         assertTrue(response.getBody().contains(spectedMessage));
@@ -83,7 +83,7 @@ class AdvanceServiceTest {
 
         ResponseEntity<String> response = advanceService.createAdvance(request);
 
-        String spectedMessage="Añada una descripcion al proyecto";
+        String spectedMessage="Añada una descripcion al avance";
 
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
         assertTrue(response.getBody().contains(spectedMessage));

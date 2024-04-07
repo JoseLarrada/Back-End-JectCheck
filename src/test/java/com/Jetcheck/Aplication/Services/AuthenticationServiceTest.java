@@ -53,9 +53,13 @@ class AuthenticationServiceTest {
     @Test
     void register() {
         //Inicializacion
-        RegisterRequest request = new RegisterRequest("12344","skay0340","hola","Jose","Larrada","Maicao","jose@mail.com",1);
-        Usuarios user = new Usuarios("12344","skay0340","Larrada","Jose","Maicao","jose@mail.com",1,"Contrasena",Role.USER);
-        Usuarios userCript = new Usuarios("12344","skay0340","Larrada","Jose","Maicao","jose@mail.com",1,"ContrasenaEncriptada",Role.USER);
+        RegisterRequest request = new RegisterRequest("12344","skay0340","hola","Jose",
+                "Larrada","Maicao","jose@mail.com",1);
+        Usuarios user = new Usuarios("12344","skay0340","Larrada",
+                "Jose","Maicao","jose@mail.com",1,"Contrasena",Role.USER);
+        Usuarios userCript = new Usuarios("12344","skay0340",
+                "Larrada","Jose","Maicao","jose@mail.com",
+                1,"ContrasenaEncriptada",Role.USER);
 
         //LLamado de los mock Para el simulamiento de las dependencias
         when(passwordEncoder.encode(request.getId())).thenReturn(userCript.getPassword());

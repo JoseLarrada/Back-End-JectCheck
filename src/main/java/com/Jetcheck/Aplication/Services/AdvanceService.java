@@ -26,17 +26,18 @@ public class AdvanceService {
 
     public ResponseEntity<String> createAdvance(AdvanceRequest request){
         if (request.getTittle()==null ){
-            return ResponseEntity.badRequest().body("Añada un titulo al proyecto");
+            return ResponseEntity.badRequest().body("Añada un titulo al avance");
         }
         if (request.getDescription()==null){
-            return ResponseEntity.badRequest().body("Añada una descripcion al proyecto");
+            return ResponseEntity.badRequest().body("Añada una descripcion al avance");
         }
         if (!routesRepository.existsById(request.getRouteId())){
             return ResponseEntity.badRequest().body("Ruta inexistente");
+        }else{
+            request.setAdvanceId(Generate.IdGenerator());
+            advanceRepository.save(advanceMapper.mapperAdvance(request));
+            return ResponseEntity.ok("Creado Correctamente");
         }
-        request.setAdvanceId(Generate.IdGenerator());
-        advanceRepository.save(advanceMapper.mapperAdvance(request));
-        return ResponseEntity.ok("Creado Correctamente");
     }
 
     public ResponseEntity<String> updateAdvance(AdvanceRequest request){
@@ -63,8 +64,9 @@ public class AdvanceService {
         if (advanceRepository.existsById(id_Advance)){
             advanceRepository.deleteById(id_Advance);
             return ResponseEntity.ok("Eliminado Correctamente");
+        }else {
+            return ResponseEntity.badRequest().body("No existe un avance asociado");
         }
-        return ResponseEntity.badRequest().body("No existe un avance asociado");
     }
 
     public ResponseEntity<List<Avances>> deployAdvances(String id_Route){

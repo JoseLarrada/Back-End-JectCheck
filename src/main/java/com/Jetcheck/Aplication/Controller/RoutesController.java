@@ -16,20 +16,13 @@ import java.util.List;
 @RequestMapping("/api/v1/PrincipalContent")
 public class RoutesController {
     private final RoutesServices routesServices;
-    private final OtherRepository otherRepository;
     @PostMapping(value = "/CreateRoute")
     public ResponseEntity<String> createRuta(@RequestBody RoutesRequest routesRequest, HttpServletRequest request){
         return routesServices.addRoute(routesRequest,request);
     }
     @DeleteMapping(value = "/DeleteRoute/{name}")
     public ResponseEntity<String> deleteRute(@PathVariable String name){
-        try {
-            otherRepository.DeleteFromName(name);
-            return ResponseEntity.ok().body("Eliminado Correctamente");
-        }catch (Exception e){
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
-
+        return routesServices.disableRoute(name);
     }
     @PutMapping(value = "/UpdateRoute")
     public ResponseEntity<String> updateRuta(@RequestBody RoutesRequest routesRequest, HttpServletRequest request){

@@ -78,7 +78,7 @@ class RoutesServicesTest {
 
     @Test
     void finishProjectWithNonExistId(){
-        String identification="12345";
+        String identification="123425";
 
         when(routesRepository.existsById(identification)).thenReturn(false);
 
@@ -115,7 +115,7 @@ class RoutesServicesTest {
 
     @Test
     void acceptProject() {
-        String identification="12345";
+        String identification="UWSE12";
 
         when(routesRepository.existsById(identification)).thenReturn(true);
         when(repositoryJDBC.getstatebyId(identification)).thenReturn(5);
@@ -127,7 +127,7 @@ class RoutesServicesTest {
 
     @Test
     void acceptProjectWithNonExistId(){
-        String identification="12345";
+        String identification="h231WE";
 
         when(routesRepository.existsById(identification)).thenReturn(false);
 
@@ -138,7 +138,7 @@ class RoutesServicesTest {
 
     @Test
     void acceptProjectWithProjectFinis(){
-        String identification="12345";
+        String identification="UWSE12";
 
         when(repositoryJDBC.getstatebyId(identification)).thenReturn(2);
         when(routesRepository.existsById(identification)).thenReturn(true);

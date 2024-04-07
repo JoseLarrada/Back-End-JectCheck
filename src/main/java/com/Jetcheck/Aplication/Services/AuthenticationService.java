@@ -24,6 +24,7 @@ public class AuthenticationService {
     private final JwtServices jwtService;
     private final AuthenticationManager authenticationManager;
     private final AuthenticationMapper authenticationMapper;
+
     public AuthenticationResponse register(RegisterRequest request) {
         try{
             if (request.getUsername()==null){
@@ -42,7 +43,6 @@ public class AuthenticationService {
             //Codificar Contraseña
             String passEncode = passwordEncoder.encode(request.getPassword());
             request.setPassword(passEncode);
-
             userRepository.save(authenticationMapper.mapperRegister(request));
             var jwtToken = jwtService.generateToken(authenticationMapper.mapperRegister(request));
             return AuthenticationResponse.builder()

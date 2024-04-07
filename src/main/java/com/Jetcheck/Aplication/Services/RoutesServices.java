@@ -5,10 +5,12 @@ import com.Jetcheck.Aplication.DTo.RoutesRequest;
 import com.Jetcheck.Aplication.Entity.Rutas;
 import com.Jetcheck.Aplication.Excepcetion.PersonExceptions;
 import com.Jetcheck.Aplication.Mapper.RoutesMapper;
+import com.Jetcheck.Aplication.Repository.OtherRepository;
 import com.Jetcheck.Aplication.Repository.RepositoryJDBC;
 import com.Jetcheck.Aplication.Repository.RoutesRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.sql.Delete;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -22,10 +24,15 @@ public class RoutesServices {
     private final UploadContentService uploadContentService;
     private final RepositoryJDBC repositoryJDBC;
     private final RoutesMapper routesMapper;
+    private final OtherRepository otherRepository;
+
     public ResponseEntity<String> addRoute(RoutesRequest request, HttpServletRequest http){
         try {
             if(request.getId()==null){
                 request.setId(Generate.IdGenerator());
+            }
+            if (request.getNameRoute()==null){
+                return ResponseEntity.badRequest().body("Ingrese un nombre al proyecto");
             }
             if (routesRepository.existsById(request.getId())){
                 return ResponseEntity.badRequest().body("Ya existe un proyecto asociado a este Id");
@@ -42,6 +49,20 @@ public class RoutesServices {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
+    public ResponseEntity<String> disableRoute(String nameRoute){
+        try {
+            if (nameRoute==null){
+                return ResponseEntity.badRequest().body("Ingrese un nombre valido");
+            }else {
+                otherRepository.DeleteFromName(nameRoute);
+                return ResponseEntity.ok().body("Eliminado Correctamente");
+            }
+        }catch (Exception e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
     public ResponseEntity<String> updateRoute(RoutesRequest request, HttpServletRequest http){
         try {
             if (!routesRepository.existsById(request.getId())){
@@ -88,7 +109,11 @@ public class RoutesServices {
         }
         return ResponseEntity.badRequest().body("El proyecto no existe");
     }
+
     public ResponseEntity<String> acceptProject(String Id){
+        if (Id==null){
+            return ResponseEntity.badRequest().body("Ingrese un Valor valido");
+        }
         if (routesRepository.existsById(Id)){
             if (repositoryJDBC.getstatebyId(Id)==5){
                 repositoryJDBC.uptadestate(1,Id);
