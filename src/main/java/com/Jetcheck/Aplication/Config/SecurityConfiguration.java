@@ -43,11 +43,11 @@ public class SecurityConfiguration {
                 .cors(Customizer.withDefaults())
                 .csrf(csrf ->
                         csrf.disable())
+                .securityMatcher("/api/v1/**")
                 .authorizeHttpRequests(authRequest ->
                         authRequest
                                 .requestMatchers("/api/v1/auth/**").permitAll()
                                 .requestMatchers(WHITE_LIST_URL).permitAll()
-                                .requestMatchers("/api/v1/PrincipalContent/**").permitAll()
                                 .requestMatchers("/api/v1/assets/**").permitAll()
                                 .anyRequest().authenticated()
                 )

@@ -28,12 +28,7 @@ public class AdvanceController {
     }
     @DeleteMapping(value = "/deleteadvance/{id}")
     public ResponseEntity<String> deleteAdvance(@PathVariable String id){
-        try{
-            otherRepository.DeleteAdvanceFromName(id);
-            return ResponseEntity.ok("Eliminado Correctamente");
-        }catch (PersistenceException e){
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
+        return advanceService.deleteAvance(id);
     }
     @GetMapping(value = "/chargueadvances/{id_route}")
     public ResponseEntity<List<Avances>> chargueAdvances(@PathVariable String id_route){

@@ -32,7 +32,7 @@ public class AdvanceService {
             return ResponseEntity.badRequest().body("Añada una descripcion al proyecto");
         }
         if (!routesRepository.existsById(request.getRouteId())){
-            throw new PersonExceptions("Ruta inexistente");
+            return ResponseEntity.badRequest().body("Ruta inexistente");
         }
         request.setAdvanceId(Generate.IdGenerator());
         advanceRepository.save(advanceMapper.mapperAdvance(request));

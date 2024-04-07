@@ -25,29 +25,36 @@ public class AuthenticationService {
     private final AuthenticationManager authenticationManager;
     private final AuthenticationMapper authenticationMapper;
     public AuthenticationResponse register(RegisterRequest request) {
-        if (request.getUsername()==null){
-            throw new PersonExceptions("Ingrese nombre de usario valido");
-        }
-        if (request.getPassword()==null){
-            throw new PersonExceptions("Ingrese una contraseña valida");
-        }
-        if (userRepository.existsByUsername(request.getUsername())){
-            throw new PersonExceptions("El nombre de usuario ya existe ingrese otro");
-        } else if (userRepository.existsByCorreo(request.getEmail())) {
-            throw new PersonExceptions("El correo ya existe ingrese otro");
-        } else if (userRepository.existsById(request.getId())) {
-            throw new PersonExceptions("Esta identificacion ya tiene un usuario asignado");
-        }
-        //Codificar Contraseña
-        String passEncode = passwordEncoder.encode(request.getPassword());
-        request.setPassword(passEncode);
+        try{
+            if (request.getUsername()==null){
+                throw new PersonExceptions("Ingrese nombre de usario valido");
+            }
+            if (request.getPassword()==null){
+                throw new PersonExceptions("Ingrese una contraseña valida");
+            }
+            if (userRepository.existsByUsername(request.getUsername())){
+                throw new PersonExceptions("El nombre de usuario ya existe ingrese otro");
+            } else if (userRepository.existsByCorreo(request.getEmail())) {
+                throw new PersonExceptions("El correo ya existe ingrese otro");
+            } else if (userRepository.existsById(request.getId())) {
+                throw new PersonExceptions("Esta identificacion ya tiene un usuario asignado");
+            }
+            //Codificar Contraseña
+            String passEncode = passwordEncoder.encode(request.getPassword());
+            request.setPassword(passEncode);
 
-        userRepository.save(authenticationMapper.mapperRegister(request));
-        var jwtToken = jwtService.generateToken(authenticationMapper.mapperRegister(request));
-        return AuthenticationResponse.builder()
-                .Token(jwtToken)
-                .Perfil(request.getProfile())
-                .build();
+            userRepository.save(authenticationMapper.mapperRegister(request));
+            var jwtToken = jwtService.generateToken(authenticationMapper.mapperRegister(request));
+            return AuthenticationResponse.builder()
+                    .Token(jwtToken)
+                    .Perfil(request.getProfile())
+                    .build();
+        }catch (PersonExceptions e){
+            return AuthenticationResponse.builder()
+                    .Token(e.getMessage())
+                    .build();
+        }
+
     }
 
     public AuthenticationResponse authenticate(AuthenticationRequest request) {

@@ -42,8 +42,10 @@ class AssignmentServicesTest {
 
     @Test
     void addAssignment() {
-        AssignmentRequest request =new AssignmentRequest("11111","rutaanexo1","rutaFile1",null,"124s2");
-        Entregas entregas = new Entregas(0.0,"11111","rutaanexo1","rutaFile1",null,"124s2");
+        AssignmentRequest request =new AssignmentRequest("11111","rutaanexo1",
+                "rutaFile1", null,"124s2");
+        Entregas entregas = new Entregas(0.0,"11111","rutaanexo1",
+                "rutaFile1",null,"124s2");
 
         when(advanceRepository.existsById(request.getIdAdvance())).thenReturn(true);
         when(assignmentMapper.mapperAssignment(request)).thenReturn(entregas);
@@ -59,7 +61,8 @@ class AssignmentServicesTest {
 
     @Test
     void addAssignmentWithNullFile(){
-        AssignmentRequest request =new AssignmentRequest("11111","rutaanexo1",null,null,"124s2");
+        AssignmentRequest request =new AssignmentRequest("11111","rutaanexo1",
+                null,null,"124s2");
 
         ResponseEntity<String> response = assignmentServices.addAssignment(request);
 
@@ -71,7 +74,8 @@ class AssignmentServicesTest {
 
     @Test
     void addAssignmentWithNonExistAdvance(){
-        AssignmentRequest request =new AssignmentRequest("11111","rutaanexo1","rutafile1",null,"124s2");
+        AssignmentRequest request =new AssignmentRequest("11111","rutaanexo1",
+                "rutafile1",null,"124s2");
 
         when(advanceRepository.existsById(request.getIdAdvance())).thenReturn(false);
 
@@ -118,7 +122,8 @@ class AssignmentServicesTest {
         assertTrue(response.getBody().contains("Ingrese un valor"));
     }
 
-    //Test Unitarios al metodo Eliminar
+    //Test Unitarios al metodo Calificar
+
     @Test
     void rateAssignment() {
        String idAssignment="12dasd2";
@@ -131,6 +136,7 @@ class AssignmentServicesTest {
         assertEquals(HttpStatus.OK,response.getStatusCode());
         assertTrue(response.getBody().contains("Calificado Correctamente"));
     }
+
     @Test
     void rateAssignmentWithNonExistId() {
         String idAssignment="12dasd2";
@@ -143,6 +149,7 @@ class AssignmentServicesTest {
         assertEquals(HttpStatus.BAD_REQUEST,response.getStatusCode());
         assertTrue(response.getBody().contains("No se Encontro el Id"));
     }
+    
     @Test
     void rateAssignmentWithNullId(){
         String idAssignment=null;

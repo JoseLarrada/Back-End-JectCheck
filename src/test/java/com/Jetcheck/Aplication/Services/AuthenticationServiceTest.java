@@ -57,7 +57,7 @@ class AuthenticationServiceTest {
         Usuarios user = new Usuarios("12344","skay0340","Larrada","Jose","Maicao","jose@mail.com",1,"Contrasena",Role.USER);
         Usuarios userCript = new Usuarios("12344","skay0340","Larrada","Jose","Maicao","jose@mail.com",1,"ContrasenaEncriptada",Role.USER);
 
-        //LLamado de los mock
+        //LLamado de los mock Para el simulamiento de las dependencias
         when(passwordEncoder.encode(request.getId())).thenReturn(userCript.getPassword());
         when(authenticationMapper.mapperRegister(request)).thenReturn(user);
         when(userRepository.save(user)).thenReturn(userCript);
@@ -112,6 +112,7 @@ class AuthenticationServiceTest {
 
         assertTrue(actualMessage.contains(expectedMessage));
     }
+
     @Test
     public void register_withUserExist(){
         RegisterRequest request = new RegisterRequest("12344", "skay0340", "hola", "Jose", "Larrada", "Maicao", "jose@mail.com", 1);
@@ -130,7 +131,8 @@ class AuthenticationServiceTest {
 
     @Test
     public void register_withEmailExist(){
-        RegisterRequest request = new RegisterRequest("12344", "skay0340", "hola", "Jose", "Larrada", "Maicao", "jose@mail.com", 1);
+        RegisterRequest request = new RegisterRequest("12344", "skay0340", "hola",
+                "Jose", "Larrada", "Maicao", "jose@mail.com", 1);
 
         when(userRepository.existsByUsername(request.getUsername())).thenReturn(false);
         when(userRepository.existsByCorreo(request.getEmail())).thenReturn(true);

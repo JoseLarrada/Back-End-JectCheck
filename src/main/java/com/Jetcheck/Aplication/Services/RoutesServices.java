@@ -24,7 +24,9 @@ public class RoutesServices {
     private final RoutesMapper routesMapper;
     public ResponseEntity<String> addRoute(RoutesRequest request, HttpServletRequest http){
         try {
-            request.setId(Generate.IdGenerator());
+            if(request.getId()==null){
+                request.setId(Generate.IdGenerator());
+            }
             if (routesRepository.existsById(request.getId())){
                 return ResponseEntity.badRequest().body("Ya existe un proyecto asociado a este Id");
             }
