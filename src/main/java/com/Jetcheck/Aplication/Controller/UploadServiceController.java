@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -29,5 +30,9 @@ public class UploadServiceController {
     @GetMapping(value = "/profile")
     public ResponseEntity<Usuarios> LoadProfile(HttpServletRequest request){
         return uploadContentService.UploadProfile(request);
+    }
+    @GetMapping("/filterroutes/{state}")
+    public ResponseEntity<List<Rutas>> filterProjects(HttpServletRequest request, @PathVariable int state){
+        return uploadContentService.filterRotesByIdEstado(request,state);
     }
 }

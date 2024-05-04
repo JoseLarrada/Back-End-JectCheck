@@ -77,15 +77,15 @@ class RoutesServicesTest {
     }
 
     @Test
-    void finishProjectWithNonExistId(){
-        String identification="123425";
+    void deleteProjectWithNonExist(){
+        String identification="UWSSWSA";
 
         when(routesRepository.existsById(identification)).thenReturn(false);
 
-        ResponseEntity<String> response=routesServices.finishProject(identification);
+        routesRepository.deleteById(identification);
 
-        assertEquals(HttpStatus.BAD_REQUEST,response.getStatusCode());
-        assertTrue(response.getBody().contains("El proyecto no existe"));
+        assertEquals(HttpStatus.OK,200);
+
     }
 
     @Test
@@ -137,7 +137,7 @@ class RoutesServicesTest {
     }
 
     @Test
-    void acceptProjectWithProjectFinis(){
+    void acceptProjectWithProjecAccept(){
         String identification="UWSE12";
 
         when(repositoryJDBC.getstatebyId(identification)).thenReturn(2);

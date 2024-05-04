@@ -16,7 +16,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Table(name="rutas")
 public class Rutas {
-    private int id_estado;
+    @Column(name = "id_estado")
+    private int idEstado;
     @Id
     private String id_ruta;
     @Column(nullable = false)

@@ -36,8 +36,4 @@ public class RoutesController {
     public ResponseEntity<String> finish(@PathVariable String idRoute){
         return routesServices.finishProject(idRoute);
     }
-    @GetMapping(value = "/FilterProject/{idState}")
-    public ResponseEntity<List<Rutas>> filterRoutes(@PathVariable String idState){
-        return routesServices.filterRoutes(Integer.parseInt(idState));
-    }
 }

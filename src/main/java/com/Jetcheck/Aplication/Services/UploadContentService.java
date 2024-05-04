@@ -11,6 +11,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -44,6 +45,16 @@ public class UploadContentService {
             }
         }
         return null;
+    }
+    public ResponseEntity<List<Rutas>> filterRotesByIdEstado(HttpServletRequest request,int id_state){
+        List<Rutas> projects=UploadProjects(request);
+        List<Rutas> filterRouter = new ArrayList<>();
+        for (var item: projects){
+            if (item.getIdEstado()==id_state){
+                filterRouter.add(item);
+            }
+        }
+        return ResponseEntity.ok(filterRouter);
     }
     public ResponseEntity<Usuarios> UploadProfile(HttpServletRequest request){
        String Username=Validation(request);

@@ -124,14 +124,4 @@ public class RoutesServices {
         }
         return ResponseEntity.notFound().build();
     }
-    public ResponseEntity<List<Rutas>> filterRoutes(int state) {
-        return switch (state) {
-            case 1 -> ResponseEntity.ok(repositoryJDBC.findById_estado(1));
-            case 2 -> ResponseEntity.ok(repositoryJDBC.findById_estado(2));
-            case 3 -> ResponseEntity.ok(repositoryJDBC.findById_estado(3));
-            case 4 -> ResponseEntity.ok(repositoryJDBC.findById_estado(4));
-            case 5 -> ResponseEntity.ok(repositoryJDBC.findById_estado(5));
-            default -> ResponseEntity.notFound().build();
-        };
-    }
 }

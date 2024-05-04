@@ -33,7 +33,7 @@ public class RepositoryJDBC {
             ruta.setNombre(resultSet.getString("nombre"));
             ruta.setId_docente(resultSet.getString("id_docente"));
             ruta.setId_estudiante(resultSet.getString("id_estudiante"));
-            ruta.setId_estado(resultSet.getInt("id_estado"));
+            ruta.setIdEstado(resultSet.getInt("id_estado"));
             ruta.setDescripcion(resultSet.getString("descripcion"));
             ruta.setId_ruta(resultSet.getString("id_ruta"));
             ruta.setId_integrante(resultSet.getString("id_integrante"));
@@ -50,7 +50,7 @@ public class RepositoryJDBC {
             ruta.setNombre(resultSet.getString("nombre"));
             ruta.setId_docente(resultSet.getString("id_docente"));
             ruta.setId_estudiante(resultSet.getString("id_estudiante"));
-            ruta.setId_estado(resultSet.getInt("id_estado"));
+            ruta.setIdEstado(resultSet.getInt("id_estado"));
             ruta.setDescripcion(resultSet.getString("descripcion"));
             ruta.setId_ruta(resultSet.getString("id_ruta"));
             ruta.setId_integrante(resultSet.getString("id_integrante"));
@@ -68,7 +68,7 @@ public class RepositoryJDBC {
             ruta.setNombre(resultSet.getString("nombre"));
             ruta.setId_docente(resultSet.getString("id_docente"));
             ruta.setId_estudiante(resultSet.getString("id_estudiante"));
-            ruta.setId_estado(resultSet.getInt("id_estado"));
+            ruta.setIdEstado(resultSet.getInt("id_estado"));
             ruta.setDescripcion(resultSet.getString("descripcion"));
             ruta.setId_ruta(resultSet.getString("id_ruta"));
             ruta.setId_integrante(resultSet.getString("id_integrante"));
