@@ -9,6 +9,7 @@ import com.Jetcheck.Aplication.Repository.OtherRepository;
 import com.Jetcheck.Aplication.Repository.RepositoryJDBC;
 import com.Jetcheck.Aplication.Repository.RoutesRepository;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.sql.Delete;
 import org.springframework.http.ResponseEntity;
@@ -49,17 +50,17 @@ public class RoutesServices {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
-
+    @Transactional
     public ResponseEntity<String> disableRoute(String nameRoute){
-        try {
-            if (nameRoute==null){
-                return ResponseEntity.badRequest().body("Ingrese un nombre valido");
-            }else {
-                otherRepository.DeleteFromName(nameRoute);
-                return ResponseEntity.ok().body("Eliminado Correctamente");
+        if (nameRoute==null){
+            return ResponseEntity.badRequest().body("Ingrese un nombre valido");
+        }else {
+            if(routesRepository.existsByNombre(nameRoute)){
+                routesRepository.deleteByNombre(nameRoute);
+                return ResponseEntity.ok("Eliminado Correctamente");
+            }else{
+                return ResponseEntity.badRequest().body("No se encontro el proyecto");
             }
-        }catch (Exception e){
-            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
