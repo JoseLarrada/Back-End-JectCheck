@@ -23,13 +23,13 @@ public class AssignmentServices {
     private final AssignmentMapper assignmentMapper;
 
     public ResponseEntity<String> addAssignment(AssignmentRequest request){
+        request.setIdAssignment(idGeneratorConfig.IdGenerator());
         if (request.getFile()==null){
             return ResponseEntity.badRequest().body("Ingrese un archivo valido");
         }
         if (!advanceRepository.existsById(request.getIdAdvance())){
             return ResponseEntity.badRequest().body("No existe el Avance");
         }else{
-            request.setIdAssignment(idGeneratorConfig.IdGenerator());
             assignmentRepository.save(assignmentMapper.mapperAssignment(request));
             return ResponseEntity.ok("Entrega correcta");
         }

@@ -8,6 +8,7 @@ import com.Jetcheck.Aplication.Mapper.AdvanceMapper;
 import com.Jetcheck.Aplication.Repository.AdvanceRepository;
 import com.Jetcheck.Aplication.Repository.OtherRepository;
 import com.Jetcheck.Aplication.Repository.RoutesRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -56,13 +57,13 @@ public class AdvanceService {
         advanceRepository.save(advanceMapper.mapperAdvance(request));
         return ResponseEntity.ok("Modificado Correctamente");
     }
-
+    @Transactional
     public ResponseEntity<String> deleteAvance(String id_Advance){
         if (id_Advance==null){
             return ResponseEntity.badRequest().body("Añada un id valido");
         }
-        if (advanceRepository.existsById(id_Advance)){
-            advanceRepository.deleteById(id_Advance);
+        if (advanceRepository.existsByTitulo(id_Advance)){
+            advanceRepository.deleteByTitulo(id_Advance);
             return ResponseEntity.ok("Eliminado Correctamente");
         }else {
             return ResponseEntity.badRequest().body("No existe un avance asociado");

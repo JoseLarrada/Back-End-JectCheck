@@ -22,16 +22,16 @@ public class AssignmentController {
     public ResponseEntity<String> updateAssignment(@RequestBody AssignmentRequest request){
         return assignmentServices.modifyAssignment(request);
     }
-    @DeleteMapping("/DeleteAssignment")
-    public ResponseEntity<String> deleteAssignment(@RequestParam String Id_Assignment){
-        return assignmentServices.deleteAssignment(Id_Assignment);
+    @DeleteMapping("/DeleteAssignment/{idAssignment}")
+    public ResponseEntity<String> deleteAssignment(@PathVariable String idAssignment){
+        return assignmentServices.deleteAssignment(idAssignment);
     }
-    @PutMapping("/RateAssignment")
-    public ResponseEntity<String> rate(@RequestParam double rate, @RequestParam String Id_Assignment){
-        return assignmentServices.rateAssignment(rate,Id_Assignment);
+    @PutMapping("/RateAssignment/{rate}/{idAssignment}")
+    public ResponseEntity<String> rate(@PathVariable double rate, @PathVariable String idAssignment){
+        return assignmentServices.rateAssignment(rate,idAssignment);
     }
-    @GetMapping("/LoadAssignment")
-    public ResponseEntity<List<Entregas>> loadAssignment(@RequestParam String id_advance){
-        return assignmentServices.deployAssignment(id_advance);
+    @GetMapping("/LoadAssignment/{idAssignment}")
+    public ResponseEntity<List<Entregas>> loadAssignment(@PathVariable String idAssignment){
+        return assignmentServices.deployAssignment(idAssignment);
     }
 }
