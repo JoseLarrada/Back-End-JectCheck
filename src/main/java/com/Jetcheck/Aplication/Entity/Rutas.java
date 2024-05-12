@@ -30,5 +30,6 @@ public class Rutas {
     private String nombre;
     private String id_integrante;
     private String id_integrante2;
-
+    @Column(name = "nota_final")
+    private Double notaFinal;
 }
