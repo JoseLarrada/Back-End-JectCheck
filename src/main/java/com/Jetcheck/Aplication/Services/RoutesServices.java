@@ -82,14 +82,14 @@ public class RoutesServices {
         }
     }
 
-    public String nullMember1(String member1){
+    private String nullMember1(String member1){
         if (member1!=null){
             return repositoryJDBC.GetIdStudentByName(member1);
         }else{
             return null;
         }
     }
-    public String nullMember2(String member2){
+    private String nullMember2(String member2){
         if (member2!=null){
             return repositoryJDBC.GetIdStudentByName(member2);
         }else{

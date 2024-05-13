@@ -31,6 +31,6 @@ public class Avances {
     private String rubrica;
     @Column(nullable = false)
     private String titulo;
-    @Column(name = "nota_acomulada")
-    private Double notaAcomulada;
+    @Column(name = "nota_acumulada")
+    private Double notaAcumulada;
 }

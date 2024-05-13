@@ -45,7 +45,6 @@ public class OtherRepository {
         String sql="SELECT * FROM entregas WHERE id_avance= ?";
         List<Entregas> Assignments = jdbcTemplate2.query(sql, new Object[] { id_Advance } ,(resultSet, rowNum) -> {
             Entregas Assignment = new Entregas();
-            Assignment.setCalificacion(resultSet.getDouble("calificacion"));
             Assignment.setId_avance(resultSet.getString("id_avance"));
             Assignment.setAnexos(resultSet.getString("anexos"));
             Assignment.setArchivo_entrega(resultSet.getString("archivo_entrega"));

@@ -12,7 +12,7 @@ public class IdGeneratorConfig {
         for (int i = 0; i < 5; i++) {
             char randomChar = (char) ('A' + random.nextInt(26));
             int randomNumber = random.nextInt(10);
-            cadena.append(String.valueOf(randomNumber)).append(randomChar);
+            cadena.append(randomNumber).append(randomChar);
         }
         return cadena.toString();
     }
