@@ -30,7 +30,7 @@ public class OtherRepository {
         String sql="SELECT * FROM avances WHERE id_ruta= ?";
         List<Avances> advances = jdbcTemplate2.query(sql, new Object[] { id_ruta } ,(resultSet, rowNum) -> {
             Avances advance = new Avances();
-            advance.setId_estado(resultSet.getInt("id_estado"));
+            advance.setIdEstado(resultSet.getInt("id_estado"));
             advance.setFecha_creacion(resultSet.getDate("fecha_creacion"));
             advance.setId_ruta(resultSet.getString("id_ruta"));
             advance.setId_avance(resultSet.getString("id_avance"));

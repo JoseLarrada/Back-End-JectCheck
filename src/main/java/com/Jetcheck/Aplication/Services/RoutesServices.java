@@ -2,8 +2,6 @@ package com.Jetcheck.Aplication.Services;
 
 import com.Jetcheck.Aplication.Config.IdGeneratorConfig;
 import com.Jetcheck.Aplication.DTo.RoutesRequest;
-import com.Jetcheck.Aplication.Entity.Rutas;
-import com.Jetcheck.Aplication.Excepcetion.PersonExceptions;
 import com.Jetcheck.Aplication.Mapper.RoutesMapper;
 import com.Jetcheck.Aplication.Repository.OtherRepository;
 import com.Jetcheck.Aplication.Repository.RepositoryJDBC;
@@ -11,11 +9,8 @@ import com.Jetcheck.Aplication.Repository.RoutesRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.sql.Delete;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -55,8 +50,8 @@ public class RoutesServices {
         if (nameRoute==null){
             return ResponseEntity.badRequest().body("Ingrese un nombre valido");
         }else {
-            if(routesRepository.existsByNombre(nameRoute)){
-                routesRepository.deleteByNombre(nameRoute);
+            if(routesRepository.existsByTitulo(nameRoute)){
+                routesRepository.deleteByTitulo(nameRoute);
                 return ResponseEntity.ok("Eliminado Correctamente");
             }else{
                 return ResponseEntity.badRequest().body("No se encontro el proyecto");

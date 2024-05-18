@@ -27,7 +27,7 @@ public class Rutas {
     @Column(nullable = false)
     private String id_estudiante;
     @Column(nullable = false)
-    private String nombre;
+    private String titulo;
     private String id_integrante;
     private String id_integrante2;
     @Column(name = "nota_final")

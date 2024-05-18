@@ -30,7 +30,7 @@ public class RepositoryJDBC {
                 "UNION SELECT * FROM rutas WHERE id_integrante2 = ?";
         List<Rutas> routes = jdbcTemplate.query(sql, new Object[] { username, username, username } ,(resultSet, rowNum) -> {
             Rutas ruta = new Rutas();
-            ruta.setNombre(resultSet.getString("nombre"));
+            ruta.setTitulo(resultSet.getString("titulo"));
             ruta.setId_docente(resultSet.getString("id_docente"));
             ruta.setId_estudiante(resultSet.getString("id_estudiante"));
             ruta.setIdEstado(resultSet.getInt("id_estado"));
@@ -47,7 +47,7 @@ public class RepositoryJDBC {
         String sql="SELECT * FROM rutas WHERE id_estado= ?";
         List<Rutas> routes = jdbcTemplate.query(sql, new Object[] { id_estado } ,(resultSet, rowNum) -> {
             Rutas ruta = new Rutas();
-            ruta.setNombre(resultSet.getString("nombre"));
+            ruta.setTitulo(resultSet.getString("nombre"));
             ruta.setId_docente(resultSet.getString("id_docente"));
             ruta.setId_estudiante(resultSet.getString("id_estudiante"));
             ruta.setIdEstado(resultSet.getInt("id_estado"));
@@ -65,7 +65,7 @@ public class RepositoryJDBC {
                 "WHERE id_usuario=(SELECT id FROM usuarios WHERE username= ?))";
         List<Rutas> routes = jdbcTemplate.query(sql, new Object[] { username } ,(resultSet, rowNum) -> {
             Rutas ruta = new Rutas();
-            ruta.setNombre(resultSet.getString("nombre"));
+            ruta.setTitulo(resultSet.getString("titulo"));
             ruta.setId_docente(resultSet.getString("id_docente"));
             ruta.setId_estudiante(resultSet.getString("id_estudiante"));
             ruta.setIdEstado(resultSet.getInt("id_estado"));

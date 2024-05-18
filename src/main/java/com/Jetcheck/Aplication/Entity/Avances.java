@@ -1,6 +1,5 @@
 package com.Jetcheck.Aplication.Entity;
 
-import jakarta.annotation.Nullable;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -19,8 +18,8 @@ import java.util.Date;
 @NoArgsConstructor
 @Table(name = "avances")
 public class Avances {
-    @Column(nullable = false)
-    private int id_estado;
+    @Column(name = "id_estado")
+    private int idEstado;
     private Date fecha_creacion;
     private String id_ruta;
     @Id

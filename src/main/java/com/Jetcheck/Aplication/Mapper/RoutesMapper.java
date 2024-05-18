@@ -13,7 +13,7 @@ public class RoutesMapper {
                 .descripcion(routesRequest.getDescription())
                 .id_docente(idDocente)
                 .id_estudiante(id_Estudiante)
-                .nombre(routesRequest.getNameRoute())
+                .titulo(routesRequest.getNameRoute())
                 .id_integrante(routesRequest.getId_Member())
                 .id_integrante2(routesRequest.getId_Member2())
                 .build();
