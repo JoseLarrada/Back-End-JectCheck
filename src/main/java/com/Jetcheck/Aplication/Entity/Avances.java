@@ -27,7 +27,6 @@ public class Avances {
     private String id_avance;
     @Column(nullable = false)
     private String descripcion;
-    private String rubrica;
     @Column(nullable = false)
     private String titulo;
     @Column(name = "nota_acumulada")

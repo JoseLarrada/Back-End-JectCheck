@@ -12,6 +12,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Date;
 import java.util.List;
@@ -73,5 +74,4 @@ public class AdvanceService {
     public ResponseEntity<List<Avances>> deployAdvances(String id_Route){
         return ResponseEntity.ok(advance.getAvancesByRoutes(id_Route));
     }
-
 }

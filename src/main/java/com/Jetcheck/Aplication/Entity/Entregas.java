@@ -16,8 +16,6 @@ import lombok.NoArgsConstructor;
 @Table(name = "entregas")
 public class Entregas {
     private String id_avance;
-    private String anexos;
-    private String archivo_entrega;
     private String comentario;
     @Id
     private String id_entrega;

@@ -1,6 +1,7 @@
 package com.Jetcheck.Aplication.Controller;
 
 import com.Jetcheck.Aplication.DTo.Asset;
+import com.Jetcheck.Aplication.DTo.FileResponse;
 import com.Jetcheck.Aplication.Services.S3Services;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,13 +22,8 @@ public class AssetController {
     private S3Services s3Services;
 
     @PostMapping(value = "/Upload")
-    public Map<String, String> upload(@RequestParam("file") MultipartFile File){
-        String key=s3Services.putObject(File);
-
-        Map<String,String> result=new HashMap<>();
-        result.put("key",key);
-        result.put("url",s3Services.getObjectUrl(key));
-        return result;
+    public FileResponse upload(@RequestParam("file") MultipartFile File){
+        return s3Services.putObject(File);
     }
     @GetMapping(value = "Get-Object", params = "key")
     ResponseEntity<ByteArrayResource>getObject(@RequestParam String key){

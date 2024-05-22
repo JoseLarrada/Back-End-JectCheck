@@ -1,13 +1,13 @@
 package com.Jetcheck.Aplication.Services;
 
 import com.Jetcheck.Aplication.DTo.Asset;
+import com.Jetcheck.Aplication.DTo.FileResponse;
+import com.Jetcheck.Aplication.Entity.ArchivosEntrega;
 import com.amazonaws.services.s3.AmazonS3Client;
-import com.amazonaws.services.s3.model.ObjectMetadata;
-import com.amazonaws.services.s3.model.PutObjectRequest;
-import com.amazonaws.services.s3.model.S3Object;
-import com.amazonaws.services.s3.model.S3ObjectInputStream;
+import com.amazonaws.services.s3.model.*;
 import com.amazonaws.util.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -20,16 +20,22 @@ public class S3Services {
     private final static String BUCKET="jectcheckbucket";
      @Autowired
     private AmazonS3Client s3Client;
-    public String putObject(MultipartFile multipartFile){
-        String extension= StringUtils.getFilenameExtension(multipartFile.getOriginalFilename());
+    public FileResponse putObject(MultipartFile file){
+        String extension= StringUtils.getFilenameExtension(file.getOriginalFilename());
         String key=String.format("%s.%s", UUID.randomUUID(),extension);
 
         ObjectMetadata objectMetadata=new ObjectMetadata();
-        objectMetadata.setContentType(multipartFile.getContentType());
+        objectMetadata.setContentType(file.getContentType());
         try{
-            PutObjectRequest putObjectRequest=new PutObjectRequest(BUCKET,key,multipartFile.getInputStream(),objectMetadata);
+            PutObjectRequest putObjectRequest=new PutObjectRequest(BUCKET,key,file.getInputStream(),objectMetadata)
+                    .withCannedAcl(CannedAccessControlList.PublicReadWrite);
             s3Client.putObject(putObjectRequest);
-            return key;
+            var results=FileResponse.builder()
+                    .key(key)
+                    .url(getObjectUrl(key))
+                    .fileName(file.getOriginalFilename())
+                    .build();
+            return results;
         }catch (IOException ex){
             throw new RuntimeException(ex.getMessage(),ex.getCause());
         }
@@ -46,12 +52,13 @@ public class S3Services {
             throw new RuntimeException(ex.getMessage(), ex.getCause());
         }
     }
-
     public void deleteObject(String key){
         s3Client.deleteObject(BUCKET,key);
     }
-
     public String getObjectUrl(String key){
         return String.format("https://%s.s3.amazonaws.com/%s",BUCKET,key);
+    }
+    public ResponseEntity<String> uploadFiles(MultipartFile file, String idAdvance){
+        FileResponse response= putObject(file);
     }
 }
