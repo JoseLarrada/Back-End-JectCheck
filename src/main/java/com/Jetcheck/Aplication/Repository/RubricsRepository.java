@@ -1,9 +1,9 @@
 package com.Jetcheck.Aplication.Repository;
 
-import com.Jetcheck.Aplication.Entity.DatosArchivos;
+import com.Jetcheck.Aplication.Entity.Rubricas;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface FileAssingmentRepository extends JpaRepository<DatosArchivos,String> {
+public interface RubricsRepository extends JpaRepository<Rubricas,String> {
 }
