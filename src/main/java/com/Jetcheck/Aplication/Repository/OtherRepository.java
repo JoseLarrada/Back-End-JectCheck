@@ -35,7 +35,6 @@ public class OtherRepository {
             advance.setId_ruta(resultSet.getString("id_ruta"));
             advance.setId_avance(resultSet.getString("id_avance"));
             advance.setDescripcion(resultSet.getString("descripcion"));
-            advance.setRubrica(resultSet.getString("rubrica"));
             advance.setTitulo(resultSet.getString("titulo"));
             return advance;
         });
@@ -46,8 +45,6 @@ public class OtherRepository {
         List<Entregas> Assignments = jdbcTemplate2.query(sql, new Object[] { id_Advance } ,(resultSet, rowNum) -> {
             Entregas Assignment = new Entregas();
             Assignment.setId_avance(resultSet.getString("id_avance"));
-            Assignment.setAnexos(resultSet.getString("anexos"));
-            Assignment.setArchivo_entrega(resultSet.getString("archivo_entrega"));
             Assignment.setComentario(resultSet.getString("comentario"));
             Assignment.setId_entrega(resultSet.getString("id_entrega"));
             return Assignment;

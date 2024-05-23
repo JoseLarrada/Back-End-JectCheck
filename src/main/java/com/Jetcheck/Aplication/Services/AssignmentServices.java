@@ -2,14 +2,18 @@ package com.Jetcheck.Aplication.Services;
 
 import com.Jetcheck.Aplication.Config.IdGeneratorConfig;
 import com.Jetcheck.Aplication.DTo.AssignmentRequest;
+import com.Jetcheck.Aplication.DTo.FileResponse;
+import com.Jetcheck.Aplication.Entity.DatosArchivos;
 import com.Jetcheck.Aplication.Entity.Entregas;
 import com.Jetcheck.Aplication.Mapper.AssignmentMapper;
 import com.Jetcheck.Aplication.Repository.AdvanceRepository;
 import com.Jetcheck.Aplication.Repository.AssignmentRepository;
+import com.Jetcheck.Aplication.Repository.FileAssingmentRepository;
 import com.Jetcheck.Aplication.Repository.OtherRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -44,7 +48,6 @@ public class AssignmentServices {
         assignmentRepository.save(assignmentMapper.mapperAssignment(request));
         return ResponseEntity.ok("Entrega Modificada");
     }
-
     public ResponseEntity<String> deleteAssignment(String id){
         if (id==null){return ResponseEntity.badRequest().body("Ingrese un valor");}
         if (assignmentRepository.existsById(id)){
@@ -54,7 +57,6 @@ public class AssignmentServices {
             return ResponseEntity.badRequest().body("No se encontro Entrega");
         }
     }
-
     public ResponseEntity<String> rateAssignment(double rate, String idAssignment){
         if (idAssignment==null){
             return ResponseEntity.badRequest().body("Ingrese un valor");
@@ -71,8 +73,9 @@ public class AssignmentServices {
             return ResponseEntity.badRequest().body("No se Encontro el Id");
         }
     }
-
     public ResponseEntity<List<Entregas>> deployAssignment(String id_advance){
         return ResponseEntity.ok(assignmentJDBC.getAssigmentByAdvance(id_advance));
     }
+
+
 }

@@ -15,7 +15,6 @@ public class AdvanceMapper {
                 .fecha_creacion(new Date())
                 .id_ruta(advanceRequest.getRouteId())
                 .descripcion(advanceRequest.getDescription())
-                .rubrica(advanceRequest.getRubric())
                 .titulo(advanceRequest.getTittle())
                 .build();
     }

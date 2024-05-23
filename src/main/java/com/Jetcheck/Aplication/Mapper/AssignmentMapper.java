@@ -9,8 +9,6 @@ public class AssignmentMapper {
     public Entregas mapperAssignment(AssignmentRequest assignmentRequest){
         return Entregas.builder()
                 .id_avance(assignmentRequest.getIdAdvance())
-                .anexos(assignmentRequest.getAnnexes())
-                .archivo_entrega(assignmentRequest.getFile())
                 .comentario(assignmentRequest.getComment())
                 .id_entrega(assignmentRequest.getIdAssignment())
                 .build();

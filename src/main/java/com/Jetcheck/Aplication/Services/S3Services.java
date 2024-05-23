@@ -2,7 +2,9 @@ package com.Jetcheck.Aplication.Services;
 
 import com.Jetcheck.Aplication.DTo.Asset;
 import com.Jetcheck.Aplication.DTo.FileResponse;
-import com.Jetcheck.Aplication.Entity.ArchivosEntrega;
+import com.Jetcheck.Aplication.Entity.DatosArchivos;
+import com.Jetcheck.Aplication.Repository.AssignmentRepository;
+import com.Jetcheck.Aplication.Repository.FileAssingmentRepository;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.*;
 import com.amazonaws.util.IOUtils;
@@ -16,11 +18,17 @@ import java.io.IOException;
 import java.util.UUID;
 
 @Service
+
 public class S3Services {
     private final static String BUCKET="jectcheckbucket";
      @Autowired
     private AmazonS3Client s3Client;
-    public FileResponse putObject(MultipartFile file){
+     @Autowired
+    private  FileAssingmentRepository fileRepository;
+     @Autowired
+    private  AssignmentRepository assignmentRepository;
+
+    protected FileResponse putObject(MultipartFile file){
         String extension= StringUtils.getFilenameExtension(file.getOriginalFilename());
         String key=String.format("%s.%s", UUID.randomUUID(),extension);
 
@@ -58,7 +66,27 @@ public class S3Services {
     public String getObjectUrl(String key){
         return String.format("https://%s.s3.amazonaws.com/%s",BUCKET,key);
     }
-    public ResponseEntity<String> uploadFiles(MultipartFile file, String idAdvance){
-        FileResponse response= putObject(file);
+
+    public FileResponse uploadFiles(MultipartFile file, String idAssignment){
+        if (assignmentRepository.existsById(idAssignment)){
+            FileResponse response= putObject(file);
+            var archivo= DatosArchivos.builder()
+                    .idArchivo(response.getKey())
+                    .url(response.getUrl())
+                    .nombreArchivo(response.getFileName())
+                    .idEntrega(idAssignment)
+                    .build();
+            fileRepository.save(archivo);
+            return response;
+        }
+        throw new RuntimeException();
+    }
+    public ResponseEntity<String> deleteFile(String key){
+        if (fileRepository.existsById(key)){
+            fileRepository.deleteById(key);
+            return ResponseEntity.ok("Eliminado Correctamente");
+        }else {
+            return ResponseEntity.badRequest().body("No se encontro un archivo");
+        }
     }
 }

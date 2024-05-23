@@ -2,6 +2,7 @@ package com.Jetcheck.Aplication.Controller;
 
 import com.Jetcheck.Aplication.DTo.Asset;
 import com.Jetcheck.Aplication.DTo.FileResponse;
+import com.Jetcheck.Aplication.Services.AssignmentServices;
 import com.Jetcheck.Aplication.Services.S3Services;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +23,8 @@ public class AssetController {
     private S3Services s3Services;
 
     @PostMapping(value = "/Upload")
-    public FileResponse upload(@RequestParam("file") MultipartFile File){
-        return s3Services.putObject(File);
+    public FileResponse upload(@RequestParam("file") MultipartFile File,@RequestParam("id") String id){
+        return s3Services.uploadFiles(File,id);
     }
     @GetMapping(value = "Get-Object", params = "key")
     ResponseEntity<ByteArrayResource>getObject(@RequestParam String key){
@@ -37,5 +38,9 @@ public class AssetController {
     @DeleteMapping(value = "delete-object", params = "key")
     void deleteObject(@RequestParam String key){
         s3Services.deleteObject(key);
+    }
+    @DeleteMapping("/deleteKey/{key}")
+    public ResponseEntity<String> deleteKey(@PathVariable String key){
+        return s3Services.deleteFile(key);
     }
 }
