@@ -2,8 +2,7 @@ package com.Jetcheck.Aplication.Mapper;
 
 import com.Jetcheck.Aplication.Config.IdGeneratorConfig;
 import com.Jetcheck.Aplication.DTo.RateRequest;
-import com.Jetcheck.Aplication.Entity.Calificaficiones;
-import lombok.NoArgsConstructor;
+import com.Jetcheck.Aplication.Entity.Calificaciones;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -11,8 +10,8 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class RateMapper {
     private final IdGeneratorConfig generatorConfig;
-    public Calificaficiones rateMapper(RateRequest rateRequest){
-        return Calificaficiones.builder()
+    public Calificaciones rateMapper(RateRequest rateRequest){
+        return Calificaciones.builder()
                 .idCalificacion(rateRequest.getIdRate()==null
                         ? generatorConfig.IdGenerator() : rateRequest.getIdRate())
                 .valorCalificacion(rateRequest.getRateValue())

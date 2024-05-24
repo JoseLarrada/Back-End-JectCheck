@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 @Table(name = "calificaciones")
-public class Calificaficiones {
+public class Calificaciones {
     @Column(name = "id_calificacion")
     @Id
     private String idCalificacion;

@@ -35,10 +35,10 @@ public class RoutesServices {
             }
             String username=uploadContentService.Validation(http);
             String id_Estudiante=repositoryJDBC.GetIdStudentByUsername(username);
-            String idDocente = repositoryJDBC.GetIdTeacherByName(request.getTeacher());
+            String idDocente = repositoryJDBC.GetIdUserByFullName(request.getTeacher(),"profesores","nombre_completo");
             //Verificacion de autollamado de metodos
-            request.setId_Member(nullMember1(request.getId_Member()));
-            request.setId_Member2(nullMember2(request.getId_Member2()));
+            request.setId_Member(nullMember(request.getId_Member()));
+            request.setId_Member2(nullMember(request.getId_Member2()));
             routesRepository.save(routesMapper.mapperRoutes(request,idDocente,id_Estudiante));
             return ResponseEntity.ok("Proyecto Guardado Correctamente");
         }catch (Exception e){
@@ -66,10 +66,10 @@ public class RoutesServices {
             }
             String username=uploadContentService.Validation(http);
             String id_Estudiante=repositoryJDBC.GetIdStudentByUsername(username);
-            String idDocente = repositoryJDBC.GetIdTeacherByName(request.getTeacher());
+            String idDocente = repositoryJDBC.GetIdUserByFullName(request.getTeacher(),"profesores","nombre_completo");
             //Verificacion de autollamado de metodos
-            request.setId_Member(nullMember1(request.getId_Member()));
-            request.setId_Member2(nullMember2(request.getId_Member2()));
+            request.setId_Member(nullMember(request.getId_Member()));
+            request.setId_Member2(nullMember(request.getId_Member2()));
             routesRepository.save(routesMapper.mapperRoutes(request,idDocente,id_Estudiante));
             return ResponseEntity.ok("Proyecto Modificado Correctamente");
         }catch (Exception e){
@@ -77,16 +77,9 @@ public class RoutesServices {
         }
     }
 
-    private String nullMember1(String member1){
+    private String nullMember(String member1){
         if (member1!=null){
-            return repositoryJDBC.GetIdStudentByName(member1);
-        }else{
-            return null;
-        }
-    }
-    private String nullMember2(String member2){
-        if (member2!=null){
-            return repositoryJDBC.GetIdStudentByName(member2);
+            return repositoryJDBC.GetIdUserByFullName(member1,"estudiantes","id_estudiante");
         }else{
             return null;
         }

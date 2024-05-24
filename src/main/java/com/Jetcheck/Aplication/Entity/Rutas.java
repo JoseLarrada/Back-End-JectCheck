@@ -32,4 +32,8 @@ public class Rutas {
     private String id_integrante2;
     @Column(name = "nota_final")
     private Double notaFinal;
+    @Column(name = "id_facultad")
+    private int idFacultad;
+    @Column(name = "id_area")
+    private int idArea;
 }

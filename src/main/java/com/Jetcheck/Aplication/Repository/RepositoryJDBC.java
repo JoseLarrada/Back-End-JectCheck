@@ -107,25 +107,9 @@ public class RepositoryJDBC {
             throw new PersonExceptions("El usuario no existe");
         }
     }
-    public String GetIdTeacherByName(String name){
+    public String GetIdUserByFullName(String name, String role,String id){
         try{
-            String sql = "select id_docente " +
-                    "from profesores " +
-                    "where id_usuario=(select id " +
-                    "from usuarios " +
-                    "where nombres= ?)";
-            return jdbcTemplate.queryForObject(sql, new Object[]{name}, String.class);
-        }catch (EmptyResultDataAccessException e){
-            throw new PersonExceptions("El docente no existe");
-        }
-    }
-    public String GetIdStudentByName(String name){
-        try{
-            String sql = "select id_estudiante " +
-                    "from estudiantes " +
-                    "where id_usuario=(select id " +
-                    "from usuarios " +
-                    "where nombres= ?)";
+            String sql = "SELECT "+ id +" FROM "+ role + " WHERE nombre_completo = ?";
             return jdbcTemplate.queryForObject(sql, new Object[]{name}, String.class);
         }catch (EmptyResultDataAccessException e){
             throw new PersonExceptions("El Estudiante no existe");
@@ -142,16 +126,6 @@ public class RepositoryJDBC {
         }catch (EmptyResultDataAccessException e){
             throw new PersonExceptions("El Estudiante no existe");
         }
-    }
-    public boolean ExistTeacher(String id){
-        String sql = "SELECT COUNT(*) FROM profesores WHERE id_docente = ?";
-        int result = jdbcTemplate.queryForObject(sql, new Object[]{id}, int.class);
-        return result > 0;
-    }
-    public boolean ExistMember(String id){
-        String sql = "SELECT COUNT(*) FROM estudiantes WHERE id_estudiante = ?";
-        int result = jdbcTemplate.queryForObject(sql, new Object[]{id}, int.class);
-        return result > 0;
     }
     public int GetPerfilByUsername(String username){
         String sql = "SELECT perfil FROM usuarios WHERE username= ?";
@@ -178,6 +152,18 @@ public class RepositoryJDBC {
             return jdbcTemplate.queryForObject(sql, new Object[]{id_route}, int.class);
         }catch (EmptyResultDataAccessException e){
             throw new PersonExceptions("No se ha podido completar la sentencia");
+        }
+    }
+
+    public List<String> findUserInteractive(String name,String roleUser){
+        try {
+            String sql = "SELECT nombre_completo FROM " + roleUser + " WHERE nombre_completo LIKE ?";
+            List<String> listUsers = jdbcTemplate.query(sql, new Object[] { "%" + name + "%" }, (resultSet, rowNum) ->
+                    resultSet.getString("nombre_completo")
+            );
+            return listUsers;
+        }catch (Exception e){
+            throw new RuntimeException();
         }
     }
 
