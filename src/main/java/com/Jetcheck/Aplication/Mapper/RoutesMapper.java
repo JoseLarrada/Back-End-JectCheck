@@ -16,6 +16,8 @@ public class RoutesMapper {
                 .titulo(routesRequest.getNameRoute())
                 .id_integrante(routesRequest.getId_Member())
                 .id_integrante2(routesRequest.getId_Member2())
+                .idArea(routesRequest.getIdArea())
+                .idFacultad(routesRequest.getIdFacultly())
                 .build();
     }
 }
