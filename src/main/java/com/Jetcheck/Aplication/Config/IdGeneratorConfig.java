@@ -16,4 +16,17 @@ public class IdGeneratorConfig {
         }
         return cadena.toString();
     }
+    public String getInitialName(String fullName){
+        if (fullName == null || fullName.isEmpty()) {
+            return "";
+        }
+        String[] words = fullName.split("\\s+"); // Divide la cadena por espacios
+        StringBuilder initials = new StringBuilder();
+        for (String word : words) {
+            if (!word.isEmpty()) {
+                initials.append(word.charAt(0)); // Toma el primer carácter de cada palabra
+            }
+        }
+        return initials.toString().toUpperCase();
+    }
 }

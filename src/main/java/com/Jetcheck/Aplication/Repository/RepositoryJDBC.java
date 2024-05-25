@@ -1,5 +1,7 @@
 package com.Jetcheck.Aplication.Repository;
 
+import com.Jetcheck.Aplication.Config.IdGeneratorConfig;
+import com.Jetcheck.Aplication.DTo.InteractiveSearch;
 import com.Jetcheck.Aplication.Entity.Rutas;
 import com.Jetcheck.Aplication.Entity.Usuarios;
 import com.Jetcheck.Aplication.Excepcetion.PersonExceptions;
@@ -13,6 +15,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class RepositoryJDBC {
     private final JdbcTemplate jdbcTemplate;
+    private final IdGeneratorConfig generator;
 
     public void updatePassword(Usuarios request){
         String sql="UPDATE usuarios SET password = ? WHERE id = ?";
@@ -155,12 +158,15 @@ public class RepositoryJDBC {
         }
     }
 
-    public List<String> findUserInteractive(String name,String roleUser){
+    public List<InteractiveSearch> findUserInteractive(String name,String roleUser){
         try {
             String sql = "SELECT nombre_completo FROM " + roleUser + " WHERE nombre_completo LIKE ?";
-            List<String> listUsers = jdbcTemplate.query(sql, new Object[] { "%" + name + "%" }, (resultSet, rowNum) ->
-                    resultSet.getString("nombre_completo")
-            );
+            List<InteractiveSearch> listUsers = jdbcTemplate.query(sql, new Object[] { "%" + name + "%" }, (resultSet, rowNum) ->{
+                InteractiveSearch result= new InteractiveSearch();
+               result.setInitial(generator.getInitialName(resultSet.getString("nombre_completo")));
+               result.setFullName(resultSet.getString("nombre_completo"));
+               return result;
+            });
             return listUsers;
         }catch (Exception e){
             throw new RuntimeException();

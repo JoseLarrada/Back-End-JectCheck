@@ -1,5 +1,6 @@
 package com.Jetcheck.Aplication.Controller;
 
+import com.Jetcheck.Aplication.DTo.InteractiveSearch;
 import com.Jetcheck.Aplication.Repository.OtherRepository;
 import com.Jetcheck.Aplication.Repository.RepositoryJDBC;
 import lombok.RequiredArgsConstructor;
@@ -23,12 +24,12 @@ public class LoadResourcesController {
         return ResponseEntity.ok(otherRepository.getCity(namedepartment));
     }
     @GetMapping(value = "/GetTeacher/{nameTeacher}")
-    public ResponseEntity<List<String>> existTeacher(@PathVariable String nameTeacher){
+    public ResponseEntity<List<InteractiveSearch>> existTeacher(@PathVariable String nameTeacher){
         return ResponseEntity.ok(repositoryJDBC.findUserInteractive(nameTeacher,"profesores"));
     }
 
     @GetMapping(value = "/GetStudent/{nameStudent}")
-    public ResponseEntity<List<String>> existStudent(@PathVariable String nameStudent){
+    public ResponseEntity<List<InteractiveSearch>> existStudent(@PathVariable String nameStudent){
         return ResponseEntity.ok(repositoryJDBC.findUserInteractive(nameStudent,"estudiantes"));
     }
 }
