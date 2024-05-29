@@ -36,4 +36,8 @@ public class RoutesController {
     public ResponseEntity<String> finish(@PathVariable String idRoute){
         return routesServices.finishProject(idRoute);
     }
+    @GetMapping(value = "/getProject/{id}")
+    public ResponseEntity<Rutas> getRoute(@PathVariable String id){
+        return routesServices.findRoutesById(id);
+    }
 }

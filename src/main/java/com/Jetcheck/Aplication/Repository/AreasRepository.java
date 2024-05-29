@@ -8,4 +8,6 @@ import java.util.Optional;
 
 public interface AreasRepository extends JpaRepository<Areas,Integer> {
     List<Areas> findAllByIdFacultad(int id);
+
+    Optional<Areas> findByNombre(String nameArea);
 }

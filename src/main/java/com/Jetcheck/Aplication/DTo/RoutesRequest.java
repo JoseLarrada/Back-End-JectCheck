@@ -16,6 +16,6 @@ public class RoutesRequest {
     String NameRoute;
     String Id_Member;
     String Id_Member2;
-    int idFacultly;
-    int idArea;
+    String idFacultly;
+    String idArea;
 }

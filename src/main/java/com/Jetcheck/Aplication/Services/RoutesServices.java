@@ -2,10 +2,9 @@ package com.Jetcheck.Aplication.Services;
 
 import com.Jetcheck.Aplication.Config.IdGeneratorConfig;
 import com.Jetcheck.Aplication.DTo.RoutesRequest;
+import com.Jetcheck.Aplication.Entity.Rutas;
 import com.Jetcheck.Aplication.Mapper.RoutesMapper;
-import com.Jetcheck.Aplication.Repository.OtherRepository;
-import com.Jetcheck.Aplication.Repository.RepositoryJDBC;
-import com.Jetcheck.Aplication.Repository.RoutesRepository;
+import com.Jetcheck.Aplication.Repository.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -20,8 +19,7 @@ public class RoutesServices {
     private final UploadContentService uploadContentService;
     private final RepositoryJDBC repositoryJDBC;
     private final RoutesMapper routesMapper;
-    private final OtherRepository otherRepository;
-
+    private final AreasService areasService;
     public ResponseEntity<String> addRoute(RoutesRequest request, HttpServletRequest http){
         try {
             if(request.getId()==null){
@@ -35,11 +33,13 @@ public class RoutesServices {
             }
             String username=uploadContentService.Validation(http);
             String id_Estudiante=repositoryJDBC.GetIdStudentByUsername(username);
-            String idDocente = repositoryJDBC.GetIdUserByFullName(request.getTeacher(),"profesores","nombre_completo");
+            String idDocente = repositoryJDBC.GetIdUserByFullName(request.getTeacher(),"profesores","id_docente");
             //Verificacion de autollamado de metodos
             request.setId_Member(nullMember(request.getId_Member()));
             request.setId_Member2(nullMember(request.getId_Member2()));
-            routesRepository.save(routesMapper.mapperRoutes(request,idDocente,id_Estudiante));
+            int idArea=areasService.getIdAreaByName(request.getIdArea());
+            int idFacultly= areasService.getIdFacultlyByName(request.getIdFacultly());
+            routesRepository.save(routesMapper.mapperRoutes(request,idDocente,id_Estudiante,idArea,idFacultly));
             return ResponseEntity.ok("Proyecto Guardado Correctamente");
         }catch (Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -66,11 +66,13 @@ public class RoutesServices {
             }
             String username=uploadContentService.Validation(http);
             String id_Estudiante=repositoryJDBC.GetIdStudentByUsername(username);
-            String idDocente = repositoryJDBC.GetIdUserByFullName(request.getTeacher(),"profesores","nombre_completo");
+            String idDocente = repositoryJDBC.GetIdUserByFullName(request.getTeacher(),"profesores","id_docente");
             //Verificacion de autollamado de metodos
             request.setId_Member(nullMember(request.getId_Member()));
             request.setId_Member2(nullMember(request.getId_Member2()));
-            routesRepository.save(routesMapper.mapperRoutes(request,idDocente,id_Estudiante));
+            int idArea=areasService.getIdAreaByName(request.getIdArea());
+            int idFacultly= areasService.getIdFacultlyByName(request.getIdFacultly());
+            routesRepository.save(routesMapper.mapperRoutes(request,idDocente,id_Estudiante,idArea,idFacultly));
             return ResponseEntity.ok("Proyecto Modificado Correctamente");
         }catch (Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -112,5 +114,13 @@ public class RoutesServices {
             }
         }
         return ResponseEntity.notFound().build();
+    }
+    public ResponseEntity<Rutas> findRoutesById(String id){
+        Rutas response=routesRepository.findById(id).orElse(null);
+        if (response!=null){
+            return ResponseEntity.ok(response);
+        }else {
+            return ResponseEntity.notFound().build();
+        }
     }
 }

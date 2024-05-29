@@ -25,4 +25,15 @@ public class AreasService {
     public ResponseEntity<List<Facultades>> getFacultly(){
         return ResponseEntity.ok(facultyRepository.findAll());
     }
+
+    protected int getIdFacultlyByName(String nameFacultly){
+        Facultades facultly= facultyRepository.findByNombre(nameFacultly).orElse(null);
+        assert facultly != null;
+        return facultly.getIdFacultad();
+    }
+    protected int getIdAreaByName(String nameArea){
+        Areas areas= areasRepository.findByNombre(nameArea).orElse(null);
+        assert areas != null;
+        return areas.getIdArea();
+    }
 }

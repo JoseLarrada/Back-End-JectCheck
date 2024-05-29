@@ -6,7 +6,8 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class RoutesMapper {
-    public Rutas mapperRoutes(RoutesRequest routesRequest,String idDocente, String id_Estudiante){
+    public Rutas mapperRoutes(RoutesRequest routesRequest,String idDocente, String id_Estudiante,
+                              int idArea, int idFacultly){
         return Rutas.builder()
                 .id_ruta(routesRequest.getId())
                 .idEstado(5)
@@ -16,8 +17,8 @@ public class RoutesMapper {
                 .titulo(routesRequest.getNameRoute())
                 .id_integrante(routesRequest.getId_Member())
                 .id_integrante2(routesRequest.getId_Member2())
-                .idArea(routesRequest.getIdArea())
-                .idFacultad(routesRequest.getIdFacultly())
+                .idArea(idArea)
+                .idFacultad(idFacultly)
                 .build();
     }
 }
