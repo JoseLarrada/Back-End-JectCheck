@@ -36,4 +36,15 @@ public class AreasService {
         assert areas != null;
         return areas.getIdArea();
     }
+    protected String getNameFacultlyById(int id){
+        Facultades facultly= facultyRepository.findById(id).orElse(null);
+        assert facultly != null;
+        return facultly.getNombre();
+    }
+    protected String getNameAreaById(int id){
+        Areas areas= areasRepository.findById(id).orElse(null);
+        assert areas != null;
+        return areas.getNombre();
+    }
+
 }

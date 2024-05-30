@@ -1,6 +1,7 @@
 package com.Jetcheck.Aplication.Controller;
 
 import com.Jetcheck.Aplication.DTo.RoutesRequest;
+import com.Jetcheck.Aplication.DTo.RoutesResponse;
 import com.Jetcheck.Aplication.Entity.Rutas;
 import com.Jetcheck.Aplication.Repository.OtherRepository;
 import com.Jetcheck.Aplication.Services.RoutesServices;
@@ -36,8 +37,13 @@ public class RoutesController {
     public ResponseEntity<String> finish(@PathVariable String idRoute){
         return routesServices.finishProject(idRoute);
     }
+    @PutMapping(value = "/RejectProject/{idRoute}")
+    public ResponseEntity<String> reject(@PathVariable String idRoute){
+        return routesServices.rejectProject(idRoute);
+    }
     @GetMapping(value = "/getProject/{id}")
-    public ResponseEntity<Rutas> getRoute(@PathVariable String id){
+    public ResponseEntity<RoutesResponse> getRoute(@PathVariable String id){
         return routesServices.findRoutesById(id);
     }
+
 }

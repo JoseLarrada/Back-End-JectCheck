@@ -2,6 +2,7 @@ package com.Jetcheck.Aplication.Services;
 
 import com.Jetcheck.Aplication.Config.IdGeneratorConfig;
 import com.Jetcheck.Aplication.DTo.RoutesRequest;
+import com.Jetcheck.Aplication.DTo.RoutesResponse;
 import com.Jetcheck.Aplication.Entity.Rutas;
 import com.Jetcheck.Aplication.Mapper.RoutesMapper;
 import com.Jetcheck.Aplication.Repository.*;
@@ -15,7 +16,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class RoutesServices {
     private final RoutesRepository routesRepository;
-    private final IdGeneratorConfig Generate;
+    private final IdGeneratorConfig generate;
     private final UploadContentService uploadContentService;
     private final RepositoryJDBC repositoryJDBC;
     private final RoutesMapper routesMapper;
@@ -23,7 +24,7 @@ public class RoutesServices {
     public ResponseEntity<String> addRoute(RoutesRequest request, HttpServletRequest http){
         try {
             if(request.getId()==null){
-                request.setId(Generate.IdGenerator());
+                request.setId(generate.IdGenerator());
             }
             if (request.getNameRoute()==null){
                 return ResponseEntity.badRequest().body("Ingrese un nombre al proyecto");
@@ -33,7 +34,7 @@ public class RoutesServices {
             }
             String username=uploadContentService.Validation(http);
             String id_Estudiante=repositoryJDBC.GetIdStudentByUsername(username);
-            String idDocente = repositoryJDBC.GetIdUserByFullName(request.getTeacher(),"profesores","id_docente");
+            String idDocente = repositoryJDBC.getIdUserByFullName(request.getTeacher(),"profesores","id_docente");
             //Verificacion de autollamado de metodos
             request.setId_Member(nullMember(request.getId_Member()));
             request.setId_Member2(nullMember(request.getId_Member2()));
@@ -66,7 +67,7 @@ public class RoutesServices {
             }
             String username=uploadContentService.Validation(http);
             String id_Estudiante=repositoryJDBC.GetIdStudentByUsername(username);
-            String idDocente = repositoryJDBC.GetIdUserByFullName(request.getTeacher(),"profesores","id_docente");
+            String idDocente = repositoryJDBC.getIdUserByFullName(request.getTeacher(),"profesores","id_docente");
             //Verificacion de autollamado de metodos
             request.setId_Member(nullMember(request.getId_Member()));
             request.setId_Member2(nullMember(request.getId_Member2()));
@@ -81,7 +82,7 @@ public class RoutesServices {
 
     private String nullMember(String member1){
         if (member1!=null){
-            return repositoryJDBC.GetIdUserByFullName(member1,"estudiantes","id_estudiante");
+            return repositoryJDBC.getIdUserByFullName(member1,"estudiantes","id_estudiante");
         }else{
             return null;
         }
@@ -115,12 +116,35 @@ public class RoutesServices {
         }
         return ResponseEntity.notFound().build();
     }
-    public ResponseEntity<Rutas> findRoutesById(String id){
-        Rutas response=routesRepository.findById(id).orElse(null);
-        if (response!=null){
-            return ResponseEntity.ok(response);
+    public ResponseEntity<RoutesResponse> findRoutesById(String id){
+        Rutas route=routesRepository.findById(id).orElse(null);
+        if (route!=null){
+            String member1=repositoryJDBC.getFullNameUserById(route.getId_estudiante(), "estudiantes","id_estudiante");
+            String member2=repositoryJDBC.getFullNameUserById(route.getId_integrante(), "estudiantes","id_estudiante");
+            String member3=repositoryJDBC.getFullNameUserById(route.getId_integrante2(), "estudiantes","id_estudiante");
+           var response=RoutesResponse.builder()
+                   .title(route.getTitulo())
+                   .area(areasService.getNameAreaById(route.getIdArea()))
+                   .state(route.getIdEstado())
+                   .description(route.getDescripcion())
+                   .firstsMember(generate.getInitialName(member1))
+                   .secondMember(generate.getInitialName(member2))
+                   .thirdMember(generate.getInitialName(member3))
+                   .build();
+           return ResponseEntity.ok(response);
         }else {
             return ResponseEntity.notFound().build();
         }
+    }
+    public ResponseEntity<String> rejectProject(String id){
+        if (routesRepository.existsById(id)){
+            if (repositoryJDBC.getstatebyId(id)==5){
+                repositoryJDBC.uptadestate(6,id);
+                return ResponseEntity.ok("Proyecto Rechazado");
+            }else {
+                return ResponseEntity.badRequest().body("El proyecto ya ha sido aceptado");
+            }
+        }
+        return ResponseEntity.notFound().build();
     }
 }

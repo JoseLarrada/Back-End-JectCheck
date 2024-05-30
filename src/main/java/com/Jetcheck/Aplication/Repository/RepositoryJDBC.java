@@ -110,7 +110,7 @@ public class RepositoryJDBC {
             throw new PersonExceptions("El usuario no existe");
         }
     }
-    public String GetIdUserByFullName(String name, String role,String id){
+    public String getIdUserByFullName(String name, String role, String id){
         try{
             String sql = "SELECT "+ id +" FROM "+ role + " WHERE nombre_completo = ?";
             return jdbcTemplate.queryForObject(sql, new Object[]{name}, String.class);
@@ -118,6 +118,16 @@ public class RepositoryJDBC {
             throw new PersonExceptions("El Estudiante no existe");
         }
     }
+    public String getFullNameUserById(String identificacion, String role, String idRole){
+        try{
+            String sql = "SELECT nombre_completo FROM "+ role + " WHERE " +idRole+ "= ?";
+            return jdbcTemplate.queryForObject(sql, new Object[]{identificacion}, String.class);
+        }catch (EmptyResultDataAccessException e){
+            return null;
+        }
+    }
+
+
     public String GetIdStudentByUsername(String username){
         try{
             String sql = "select id_estudiante " +
