@@ -81,4 +81,12 @@ public class OtherRepository {
             throw new PersonExceptions(e.getMessage()) ;
         }
     }
+    public int updateIdByKeyUrl(String table,String idToUpdate, String idTable,String valueToUpdate,String valueKey){
+        try{
+            String sql= "UPDATE "+table+" SET "+idToUpdate+" = ? WHERE "+idTable+" = ?";
+            return jdbcTemplate2.update(sql,valueToUpdate,valueKey);
+        }catch (Exception e){
+            throw new RuntimeException(e.getMessage());
+        }
+    }
 }

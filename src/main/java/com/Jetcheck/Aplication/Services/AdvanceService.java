@@ -2,6 +2,7 @@ package com.Jetcheck.Aplication.Services;
 
 import com.Jetcheck.Aplication.Config.IdGeneratorConfig;
 import com.Jetcheck.Aplication.DTo.AdvanceRequest;
+import com.Jetcheck.Aplication.DTo.FileResponse;
 import com.Jetcheck.Aplication.Entity.Avances;
 import com.Jetcheck.Aplication.Excepcetion.PersonExceptions;
 import com.Jetcheck.Aplication.Mapper.AdvanceMapper;
@@ -38,6 +39,7 @@ public class AdvanceService {
         }else{
             request.setAdvanceId(Generate.IdGenerator());
             advanceRepository.save(advanceMapper.mapperAdvance(request));
+            updateRubrics(request.getRubric(),request);
             return ResponseEntity.ok("Creado Correctamente");
         }
     }
@@ -73,5 +75,11 @@ public class AdvanceService {
 
     public ResponseEntity<List<Avances>> deployAdvances(String id_Route){
         return ResponseEntity.ok(advance.getAvancesByRoutes(id_Route));
+    }
+    private void updateRubrics(List<FileResponse> responseList,AdvanceRequest request){
+        for (var item: responseList){
+            advance.updateIdByKeyUrl("rubricas","id_avance","id_rubrica",
+                    request.getAdvanceId(), item.getKey());
+        }
     }
 }

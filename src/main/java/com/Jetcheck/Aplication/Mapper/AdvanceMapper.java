@@ -11,7 +11,7 @@ public class AdvanceMapper {
     public Avances mapperAdvance(AdvanceRequest advanceRequest){
         return Avances.builder()
                 .id_avance(advanceRequest.getAdvanceId())
-                .idEstado(5)
+                .idEstado(7)
                 .fecha_creacion(new Date())
                 .id_ruta(advanceRequest.getRouteId())
                 .descripcion(advanceRequest.getDescription())
