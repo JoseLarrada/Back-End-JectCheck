@@ -9,6 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class RubricsService {
@@ -20,7 +22,7 @@ public class RubricsService {
         FileResponse response = s3Services.putObject(file);
         if (advanceRepository.existsById(idAdvance) && response!=null){
             var rubric= Rubricas.builder()
-                    .idRubrica(response.getKey()).url(response.getUrl()).nombreArchivo(response.getFileName())
+                    .key(response.getKey()).url(response.getUrl()).fileName(response.getFileName())
                     .idAvance(idAdvance)
                     .build();
             rubricsRepository.save(rubric);
@@ -37,5 +39,8 @@ public class RubricsService {
         }else{
             return ResponseEntity.badRequest().body("No se encontro la key");
         }
+    }
+    public ResponseEntity<List<Rubricas>> getRubricsByIdAdvance(String id){
+        return ResponseEntity.ok(rubricsRepository.findAllByIdAvance(id));
     }
 }

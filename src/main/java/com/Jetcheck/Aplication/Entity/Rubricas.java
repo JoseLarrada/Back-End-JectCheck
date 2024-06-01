@@ -16,10 +16,10 @@ import lombok.NoArgsConstructor;
 public class Rubricas {
     @Id
     @Column(name = "id_rubrica")
-    private String idRubrica;
+    private String key;
     private String url;
     @Column(name = "nombre_archivo")
-    private String nombreArchivo;
+    private String fileName;
     @Column(name = "id_avance")
     private String idAvance;
 }

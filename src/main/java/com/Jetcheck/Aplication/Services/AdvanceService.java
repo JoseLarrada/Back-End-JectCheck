@@ -58,6 +58,7 @@ public class AdvanceService {
             return ResponseEntity.badRequest().body("El avance ya ha sido calificado");
         }
         advanceRepository.save(advanceMapper.mapperAdvance(request));
+        updateRubrics(request.getRubric(),request);
         return ResponseEntity.ok("Modificado Correctamente");
     }
     @Transactional
