@@ -62,15 +62,17 @@ public class AdvanceService {
         return ResponseEntity.ok("Modificado Correctamente");
     }
     @Transactional
-    public ResponseEntity<String> deleteAvance(String id_Advance){
-        if (id_Advance==null){
+    public ResponseEntity<String> deleteAvance(String titleAdvance,String idAdvance){
+        if (titleAdvance==null){
             return ResponseEntity.badRequest().body("Añada un id valido");
         }
-        if (advanceRepository.existsByTitulo(id_Advance)){
-            advanceRepository.deleteByTitulo(id_Advance);
+        Avances response= advanceRepository.findById(idAdvance).orElse(null);
+        assert response != null;
+        if (titleAdvance.equals(response.getTitulo())){
+            advanceRepository.deleteById(idAdvance);
             return ResponseEntity.ok("Eliminado Correctamente");
         }else {
-            return ResponseEntity.badRequest().body("No existe un avance asociado");
+            return ResponseEntity.badRequest().body("No coinciden los nombres");
         }
     }
 

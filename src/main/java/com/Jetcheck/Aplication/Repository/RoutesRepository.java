@@ -4,6 +4,4 @@ import com.Jetcheck.Aplication.Entity.Rutas;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface RoutesRepository extends JpaRepository<Rutas,String> {
-    void deleteByTitulo(String nombre);
-    boolean existsByTitulo(String nombre);
 }

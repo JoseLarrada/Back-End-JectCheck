@@ -47,15 +47,17 @@ public class RoutesServices {
         }
     }
     @Transactional
-    public ResponseEntity<String> disableRoute(String nameRoute){
+    public ResponseEntity<String> disableRoute(String nameRoute,String idRoute){
         if (nameRoute==null){
             return ResponseEntity.badRequest().body("Ingrese un nombre valido");
         }else {
-            if(routesRepository.existsByTitulo(nameRoute)){
-                routesRepository.deleteByTitulo(nameRoute);
+            Rutas response=routesRepository.findById(idRoute).orElse(null);
+            assert response != null;
+            if(nameRoute.equals(response.getTitulo())){
+                routesRepository.deleteById(idRoute);
                 return ResponseEntity.ok("Eliminado Correctamente");
             }else{
-                return ResponseEntity.badRequest().body("No se encontro el proyecto");
+                return ResponseEntity.badRequest().body("No coinciden los nombres de los proyectos");
             }
         }
     }

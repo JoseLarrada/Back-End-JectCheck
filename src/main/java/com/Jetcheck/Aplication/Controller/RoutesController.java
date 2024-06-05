@@ -21,9 +21,9 @@ public class RoutesController {
     public ResponseEntity<String> createRuta(@RequestBody RoutesRequest routesRequest, HttpServletRequest request){
         return routesServices.addRoute(routesRequest,request);
     }
-    @DeleteMapping(value = "/DeleteRoute/{name}")
-    public ResponseEntity<String> deleteRute(@PathVariable String name){
-        return routesServices.disableRoute(name);
+    @DeleteMapping(value = "/DeleteRoute/{name}/{id}")
+    public ResponseEntity<String> deleteRute(@PathVariable String name,@PathVariable String id){
+        return routesServices.disableRoute(name,id);
     }
     @PutMapping(value = "/UpdateRoute")
     public ResponseEntity<String> updateRuta(@RequestBody RoutesRequest routesRequest, HttpServletRequest request){

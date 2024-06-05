@@ -26,9 +26,9 @@ public class AdvanceController {
     public ResponseEntity<String> updateAdvance(@RequestBody AdvanceRequest advanceRequest){
         return advanceService.updateAdvance(advanceRequest);
     }
-    @DeleteMapping(value = "/deleteadvance/{id}")
-    public ResponseEntity<String> deleteAdvance(@PathVariable String id){
-        return advanceService.deleteAvance(id);
+    @DeleteMapping(value = "/deleteadvance/{title}/{id}")
+    public ResponseEntity<String> deleteAdvance(@PathVariable String title,@PathVariable String id){
+        return advanceService.deleteAvance(title,id);
     }
     @GetMapping(value = "/chargueadvances/{id_route}")
     public ResponseEntity<List<Avances>> chargueAdvances(@PathVariable String id_route){
