@@ -2,7 +2,9 @@ package com.Jetcheck.Aplication.Controller;
 
 import com.Jetcheck.Aplication.DTo.Asset;
 import com.Jetcheck.Aplication.DTo.FileResponse;
+import com.Jetcheck.Aplication.Entity.DatosArchivos;
 import com.Jetcheck.Aplication.Services.AssignmentServices;
+import com.Jetcheck.Aplication.Services.FilesService;
 import com.Jetcheck.Aplication.Services.S3Services;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -21,10 +24,12 @@ import java.util.Map;
 public class AssetController {
     @Autowired
     private S3Services s3Services;
+    @Autowired
+    private FilesService filesService;
 
     @PostMapping(value = "/Upload")
     public FileResponse upload(@RequestParam("file") MultipartFile File,@RequestParam("id") String id){
-        return s3Services.uploadFiles(File,id);
+        return filesService.uploadFiles(File,id);
     }
     @GetMapping(value = "Get-Object", params = "key")
     ResponseEntity<ByteArrayResource>getObject(@RequestParam String key){
@@ -41,6 +46,10 @@ public class AssetController {
     }
     @DeleteMapping("/deleteKey/{key}")
     public ResponseEntity<String> deleteKey(@PathVariable String key){
-        return s3Services.deleteFile(key);
+        return filesService.deleteFile(key);
+    }
+    @GetMapping("/getFiles/{id}")
+    public ResponseEntity<List<DatosArchivos>> getAll(@PathVariable String id){
+        return filesService.getFilesById(id);
     }
 }

@@ -1,6 +1,7 @@
 package com.Jetcheck.Aplication.Services;
 
 import com.Jetcheck.Aplication.Config.IdGeneratorConfig;
+import com.Jetcheck.Aplication.DTo.AdvanceRequest;
 import com.Jetcheck.Aplication.DTo.AssignmentRequest;
 import com.Jetcheck.Aplication.DTo.FileResponse;
 import com.Jetcheck.Aplication.Entity.DatosArchivos;
@@ -28,13 +29,11 @@ public class AssignmentServices {
 
     public ResponseEntity<String> addAssignment(AssignmentRequest request){
         request.setIdAssignment(idGeneratorConfig.IdGenerator());
-        if (request.getFile()==null){
-            return ResponseEntity.badRequest().body("Ingrese un archivo valido");
-        }
         if (!advanceRepository.existsById(request.getIdAdvance())){
             return ResponseEntity.badRequest().body("No existe el Avance");
         }else{
             assignmentRepository.save(assignmentMapper.mapperAssignment(request));
+            updateFiles(request.getFiles(),request);
             return ResponseEntity.ok("Entrega correcta");
         }
     }
@@ -76,6 +75,11 @@ public class AssignmentServices {
     public ResponseEntity<List<Entregas>> deployAssignment(String id_advance){
         return ResponseEntity.ok(assignmentJDBC.getAssigmentByAdvance(id_advance));
     }
-
+    private void updateFiles(List<FileResponse> responseList, AssignmentRequest request){
+        for (var item: responseList){
+            assignmentJDBC.updateIdByKeyUrl("archivosentregas","id_entrega","id_archivo",
+                    request.getIdAssignment(), item.getKey());
+        }
+    }
 
 }

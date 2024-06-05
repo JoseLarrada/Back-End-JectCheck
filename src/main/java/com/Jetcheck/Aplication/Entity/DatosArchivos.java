@@ -18,10 +18,10 @@ import lombok.NoArgsConstructor;
 public class DatosArchivos {
     @Id
     @Column(name = "id_archivo")
-    private String idArchivo;
+    private String key;
     private String url;
     @Column(name = "nombre_archivo")
-    private String nombreArchivo;
+    private String fileName;
     @Column(name = "id_entrega")
     private String idEntrega;
 }

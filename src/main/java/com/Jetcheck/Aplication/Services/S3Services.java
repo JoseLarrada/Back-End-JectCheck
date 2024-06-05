@@ -23,11 +23,6 @@ public class S3Services {
     private final static String BUCKET="jectcheckbucket";
      @Autowired
     private AmazonS3Client s3Client;
-     @Autowired
-    private  FileAssingmentRepository fileRepository;
-     @Autowired
-    private  AssignmentRepository assignmentRepository;
-
     protected FileResponse putObject(MultipartFile file){
         String extension= StringUtils.getFilenameExtension(file.getOriginalFilename());
         String key=String.format("%s.%s", UUID.randomUUID(),extension);
@@ -65,28 +60,5 @@ public class S3Services {
     }
     public String getObjectUrl(String key){
         return String.format("https://%s.s3.amazonaws.com/%s",BUCKET,key);
-    }
-
-    public FileResponse uploadFiles(MultipartFile file, String idAssignment){
-        if (assignmentRepository.existsById(idAssignment)){
-            FileResponse response= putObject(file);
-            var archivo= DatosArchivos.builder()
-                    .idArchivo(response.getKey())
-                    .url(response.getUrl())
-                    .nombreArchivo(response.getFileName())
-                    .idEntrega(idAssignment)
-                    .build();
-            fileRepository.save(archivo);
-            return response;
-        }
-        throw new RuntimeException();
-    }
-    public ResponseEntity<String> deleteFile(String key){
-        if (fileRepository.existsById(key)){
-            fileRepository.deleteById(key);
-            return ResponseEntity.ok("Eliminado Correctamente");
-        }else {
-            return ResponseEntity.badRequest().body("No se encontro un archivo");
-        }
     }
 }
