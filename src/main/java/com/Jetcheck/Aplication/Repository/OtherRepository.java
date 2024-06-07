@@ -1,8 +1,10 @@
 package com.Jetcheck.Aplication.Repository;
 
+import com.Jetcheck.Aplication.DTo.InfoAssignmentResponse;
 import com.Jetcheck.Aplication.Entity.Avances;
 import com.Jetcheck.Aplication.Entity.Entregas;
 import com.Jetcheck.Aplication.Excepcetion.PersonExceptions;
+import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -64,22 +66,6 @@ public class OtherRepository {
                 resultSet.getString("nombre_departamento")
         );
         return departments;
-    }
-    public void DeleteFromName(String name){
-        try {
-            String sql="DELETE FROM rutas WHERE nombre= ?";
-            jdbcTemplate2.update(sql,name);
-        }catch (PersonExceptions e){
-            throw new PersonExceptions(e.getMessage()) ;
-        }
-    }
-    public void DeleteAdvanceFromName(String name){
-        try {
-            String sql="DELETE FROM avances WHERE titulo= ?";
-            jdbcTemplate2.update(sql,name);
-        }catch (EmptyResultDataAccessException e){
-            throw new PersonExceptions(e.getMessage()) ;
-        }
     }
     public int updateIdByKeyUrl(String table,String idToUpdate, String idTable,String valueToUpdate,String valueKey){
         try{

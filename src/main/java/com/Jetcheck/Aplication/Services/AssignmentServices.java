@@ -4,13 +4,12 @@ import com.Jetcheck.Aplication.Config.IdGeneratorConfig;
 import com.Jetcheck.Aplication.DTo.AdvanceRequest;
 import com.Jetcheck.Aplication.DTo.AssignmentRequest;
 import com.Jetcheck.Aplication.DTo.FileResponse;
+import com.Jetcheck.Aplication.DTo.InfoAssignmentResponse;
+import com.Jetcheck.Aplication.Entity.Calificaciones;
 import com.Jetcheck.Aplication.Entity.DatosArchivos;
 import com.Jetcheck.Aplication.Entity.Entregas;
 import com.Jetcheck.Aplication.Mapper.AssignmentMapper;
-import com.Jetcheck.Aplication.Repository.AdvanceRepository;
-import com.Jetcheck.Aplication.Repository.AssignmentRepository;
-import com.Jetcheck.Aplication.Repository.FileAssingmentRepository;
-import com.Jetcheck.Aplication.Repository.OtherRepository;
+import com.Jetcheck.Aplication.Repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -26,6 +25,8 @@ public class AssignmentServices {
     private final OtherRepository assignmentJDBC;
     private final IdGeneratorConfig idGeneratorConfig;
     private final AssignmentMapper assignmentMapper;
+    private final RateRepository rateRepository;
+    private final FileAssingmentRepository fileRepository;
 
     public ResponseEntity<String> addAssignment(AssignmentRequest request){
         request.setIdAssignment(idGeneratorConfig.IdGenerator());
@@ -75,11 +76,39 @@ public class AssignmentServices {
     public ResponseEntity<List<Entregas>> deployAssignment(String id_advance){
         return ResponseEntity.ok(assignmentJDBC.getAssigmentByAdvance(id_advance));
     }
+    public ResponseEntity<InfoAssignmentResponse> getInfo(String id){
+        Calificaciones rate= rateRepository.findByIdEntrega(id).orElse(null);
+        List<FileResponse> urlLinks = new java.util.ArrayList<>(List.of());
+        Entregas assignment= assignmentRepository.findById(id).orElse(null);
+        for (var item:fileRepository.findAllByIdEntrega(id)){
+            var responseFiles= FileResponse.builder()
+                    .fileName(item.getFileName()).url(item.getUrl()).key(item.getKey()).build();
+            urlLinks.add(responseFiles);
+        }
+        var response=InfoAssignmentResponse.builder()
+                .comment(assignment.getComentario())
+                .filesUpload(urlLinks)
+                .rateComment(rate != null ? rate.getComentario(): null)
+                .valueRate(rate != null ? rate.getValorCalificacion() : null)
+                .state(getState(rate != null ? rate.getValorCalificacion() : null))
+                .build();
+        return ResponseEntity.ok(response);
+    }
+    public ResponseEntity<String> getDescripcionById(String id){
+        Entregas response= assignmentRepository.findById(id).orElse(null);
+        if (response!=null){
+            return ResponseEntity.ok(response.getComentario());
+        }else {
+            return ResponseEntity.ok(null);
+        }
+    }
     private void updateFiles(List<FileResponse> responseList, AssignmentRequest request){
         for (var item: responseList){
             assignmentJDBC.updateIdByKeyUrl("archivosentregas","id_entrega","id_archivo",
                     request.getIdAssignment(), item.getKey());
         }
     }
-
+    private String getState(Double Rate){
+        return Rate != null ? "Calificado" : "No calificado";
+    }
 }

@@ -1,6 +1,7 @@
 package com.Jetcheck.Aplication.Controller;
 
 import com.Jetcheck.Aplication.DTo.AssignmentRequest;
+import com.Jetcheck.Aplication.DTo.InfoAssignmentResponse;
 import com.Jetcheck.Aplication.Entity.Entregas;
 import com.Jetcheck.Aplication.Services.AssignmentServices;
 import lombok.RequiredArgsConstructor;
@@ -33,5 +34,13 @@ public class AssignmentController {
     @GetMapping("/LoadAssignment/{idAssignment}")
     public ResponseEntity<List<Entregas>> loadAssignment(@PathVariable String idAssignment){
         return assignmentServices.deployAssignment(idAssignment);
+    }
+    @GetMapping("/getInfo/{id}")
+    public ResponseEntity<InfoAssignmentResponse> getInfo(@PathVariable String id){
+        return assignmentServices.getInfo(id);
+    }
+    @GetMapping("/getDescription/{id}")
+    public ResponseEntity<String> getDescription(@PathVariable String id){
+        return assignmentServices.getDescripcionById(id);
     }
 }

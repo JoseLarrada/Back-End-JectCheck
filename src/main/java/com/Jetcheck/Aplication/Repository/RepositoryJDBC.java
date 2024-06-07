@@ -45,23 +45,6 @@ public class RepositoryJDBC {
         });
         return routes;
     }
-
-    public List<Rutas>findById_estado(int id_estado){
-        String sql="SELECT * FROM rutas WHERE id_estado= ?";
-        List<Rutas> routes = jdbcTemplate.query(sql, new Object[] { id_estado } ,(resultSet, rowNum) -> {
-            Rutas ruta = new Rutas();
-            ruta.setTitulo(resultSet.getString("nombre"));
-            ruta.setId_docente(resultSet.getString("id_docente"));
-            ruta.setId_estudiante(resultSet.getString("id_estudiante"));
-            ruta.setIdEstado(resultSet.getInt("id_estado"));
-            ruta.setDescripcion(resultSet.getString("descripcion"));
-            ruta.setId_ruta(resultSet.getString("id_ruta"));
-            ruta.setId_integrante(resultSet.getString("id_integrante"));
-            ruta.setId_integrante2(resultSet.getString("id_integrante2"));
-            return ruta;
-        });
-        return routes;
-    }
     public List<Rutas> GetRoutesByUsername(String username){
         String sql = "SELECT * FROM rutas " +
                 "WHERE id_docente =(SELECT id_docente FROM profesores " +
@@ -100,14 +83,6 @@ public class RepositoryJDBC {
                     request.getCorreo(),request.getUsername());
         } catch (EmptyResultDataAccessException e) {
             throw new PersonExceptions("No se ha podido completar la sentencia");
-        }
-    }
-    public String getIddByUsername(String username){
-        String sql = "SELECT id FROM usuarios WHERE username = ?";
-        try {
-            return jdbcTemplate.queryForObject(sql, new Object[]{username}, String.class);
-        } catch (EmptyResultDataAccessException e) {
-            throw new PersonExceptions("El usuario no existe");
         }
     }
     public String getIdUserByFullName(String name, String role, String id){
