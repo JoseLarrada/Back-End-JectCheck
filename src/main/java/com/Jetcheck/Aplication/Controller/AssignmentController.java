@@ -39,8 +39,4 @@ public class AssignmentController {
     public ResponseEntity<InfoAssignmentResponse> getInfo(@PathVariable String id){
         return assignmentServices.getInfo(id);
     }
-    @GetMapping("/getDescription/{id}")
-    public ResponseEntity<String> getDescription(@PathVariable String id){
-        return assignmentServices.getDescripcionById(id);
-    }
 }

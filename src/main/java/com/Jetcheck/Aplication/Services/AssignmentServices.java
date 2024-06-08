@@ -46,6 +46,7 @@ public class AssignmentServices {
             return ResponseEntity.badRequest().body("La entrega Ya fue calificada");
         }
         assignmentRepository.save(assignmentMapper.mapperAssignment(request));
+        updateFiles(request.getFiles(),request);
         return ResponseEntity.ok("Entrega Modificada");
     }
     public ResponseEntity<String> deleteAssignment(String id){
@@ -93,14 +94,6 @@ public class AssignmentServices {
                 .state(getState(rate != null ? rate.getValorCalificacion() : null))
                 .build();
         return ResponseEntity.ok(response);
-    }
-    public ResponseEntity<String> getDescripcionById(String id){
-        Entregas response= assignmentRepository.findById(id).orElse(null);
-        if (response!=null){
-            return ResponseEntity.ok(response.getComentario());
-        }else {
-            return ResponseEntity.ok(null);
-        }
     }
     private void updateFiles(List<FileResponse> responseList, AssignmentRequest request){
         for (var item: responseList){

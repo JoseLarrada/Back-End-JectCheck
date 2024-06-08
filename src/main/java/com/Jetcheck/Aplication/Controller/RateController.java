@@ -1,6 +1,8 @@
 package com.Jetcheck.Aplication.Controller;
 
+import com.Jetcheck.Aplication.DTo.InfoAssignmentResponse;
 import com.Jetcheck.Aplication.DTo.RateRequest;
+import com.Jetcheck.Aplication.Entity.Calificaciones;
 import com.Jetcheck.Aplication.Services.RateServices;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -22,5 +24,9 @@ public class RateController {
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> deleteRate(@PathVariable String id){
         return rateServices.deleteRate(id);
+    }
+    @GetMapping("/getRate/{id}")
+    public ResponseEntity<Calificaciones> getInfo(@PathVariable String id){
+        return rateServices.getRateById(id);
     }
 }
