@@ -1,6 +1,7 @@
 package com.Jetcheck.Aplication.Controller;
 
 
+import com.Jetcheck.Aplication.DTo.GeneralReportResponse;
 import com.Jetcheck.Aplication.Entity.Avances;
 import com.Jetcheck.Aplication.Entity.Rutas;
 import com.Jetcheck.Aplication.Repository.OtherRepository;
@@ -19,7 +20,6 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/PrincipalContent")
 public class GeneratorInforme {
-    private final UploadContentService uploadContentService;
     private final SpringTemplateEngine springTemplateEngine; // Agregado @Autowired
     private final GeneratorReportService generatorReportService;
     private final OtherRepository otherRepository;
@@ -28,16 +28,16 @@ public class GeneratorInforme {
     @PostMapping(value = "/generate/document")
     public String generateDocument(HttpServletRequest request) {
         String finalHtml = null;
-        List<Rutas> lista = uploadContentService.UploadProjects(request);
+        List<GeneralReportResponse> lista = generatorReportService.listProject(request);
         Context dataContext = generatorReportService.setData(lista);
         finalHtml = springTemplateEngine.process("GeneralReport", dataContext);
         generatorReportService.htmlToPdf(finalHtml);
-        return "Success";
+        return "Creado Correctamente";
     }
 
     @PostMapping(value = "/Generate/CustomDocument/{Id_Route}")
     public String generateCustomReport(HttpServletRequest request, @PathVariable String Id_Route) {
-        Rutas ruta = routesRepository.findById(Id_Route).orElse(null);
+        GeneralReportResponse ruta=generatorReportService.convertToResponse(Id_Route);
         List<Avances> avances = otherRepository.getAvancesByRoutes(Id_Route);
 
         Context dataContext = new Context();

@@ -24,6 +24,20 @@ public class OtherRepository {
             throw new PersonExceptions("El avance no existe");
         }
     }
+    public String getNameState(String idRoute){
+        String sql = """
+                SELECT estado FROM estados
+                WHERE id_estado=(
+                	SELECT id_estado FROM rutas
+                	WHERE id_ruta = ?
+                )
+                """;
+        try {
+            return jdbcTemplate2.queryForObject(sql, new Object[]{idRoute}, String.class);
+        } catch (EmptyResultDataAccessException e) {
+            throw new PersonExceptions("la ruta no existe");
+        }
+    }
     public void rateprogress(double rate,String id_assignment){
         String sql="UPDATE entregas SET calificacion= ? WHERE id_entrega= ?";
         jdbcTemplate2.update(sql,rate,id_assignment);

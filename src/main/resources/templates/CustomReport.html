@@ -36,7 +36,9 @@
             color: white;
             width: 30%;
         }
-
+        .table2th>th{
+            width: 10%;
+        }
         tr:nth-child(even) {
             background-color: #f9f9f9;
         }
@@ -52,45 +54,52 @@
         <tbody>
             <tr>
                 <th>Titulo del Proyecto</th>
-                <td th:text="${ruta.id_ruta}"></td>
+                <td th:text="${ruta.idRoute}"></td>
             </tr>
             <tr>
                 <th>Identificacion del Proyecto</th>
-                <td th:text="${ruta.idEstado}"></td>
+                <td th:text="${ruta.state}"></td>
             </tr>
             <tr>
                 <th>Estado</th>
-                <td th:text="${ruta.titulo}"></td>
+                <td th:text="${ruta.title}"></td>
             </tr>
             <tr>
                 <th>Descripción</th>
-                <td th:text="${ruta.descripcion}"></td>
+                <td th:text="${ruta.description}"></td>
             </tr>
             <tr>
                 <th>Docente a cargo</th>
-                <td th:text="${ruta.id_docente}"></td>
+                <td th:text="${ruta.nameTeacher}"></td>
             </tr>
             <tr>
                 <th>Integrante 1</th>
-                <td th:text="${ruta.id_estudiante}"></td>
+                <td th:text="${ruta.nameOwner}"></td>
             </tr>
             <tr>
                 <th>Integrante 2</th>
-                <td th:text="${ruta.id_integrante != null ? ruta.id_integrante : 'N/A'}"></td>
+                <td th:text="${ruta.nameFirtsIntegrant != null ? ruta.nameFirtsIntegrant : 'N/A'}"></td>
             </tr>
             <tr>
                 <th>Integrante 3</th>
-                <td th:text="${ruta.id_integrante2 != null ? ruta.id_integrante2 : 'N/A'}"></td>
+                <td th:text="${ruta.nameSeconIntegrant != null ? ruta.nameSeconIntegrant : 'N/A'}"></td>
+            </tr>
+            <tr>
+                <th>Facultad</th>
+                <td th:text="${ruta.facultly != null ? ruta.facultly : 'N/A'}"></td>
+            </tr>
+            <tr>
+                <th>Area</th>
+                <td th:text="${ruta.area != null ? ruta.area : 'N/A'}"></td>
             </tr>
             </tbody>
     </table>
     <table class="table2">
         <thead>
-        <tr>
+        <tr class="table2th">
             <th>Id Avance</th>
             <th>Titulo</th>
             <th>Descripcion</th>
-            <th>Rubrica</th>
         </tr>
         </thead>
         <tbody>
@@ -98,7 +107,6 @@
             <td th:text="${avance.id_avance}"></td>
             <td th:text="${avance.titulo}"></td>
             <td th:text="${avance.descripcion}"></td>
-            <td th:text="${avance.rubrica}"></td>
         </tbody>
     </table>
 </body>

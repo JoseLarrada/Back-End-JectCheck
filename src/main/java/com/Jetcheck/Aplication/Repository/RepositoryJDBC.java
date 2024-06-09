@@ -41,6 +41,8 @@ public class RepositoryJDBC {
             ruta.setId_ruta(resultSet.getString("id_ruta"));
             ruta.setId_integrante(resultSet.getString("id_integrante"));
             ruta.setId_integrante2(resultSet.getString("id_integrante2"));
+            ruta.setIdArea(resultSet.getInt("id_area"));
+            ruta.setIdFacultad(resultSet.getInt("id_facultad"));
             return ruta;
         });
         return routes;
