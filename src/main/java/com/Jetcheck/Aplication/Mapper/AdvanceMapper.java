@@ -1,6 +1,6 @@
 package com.Jetcheck.Aplication.Mapper;
 
-import com.Jetcheck.Aplication.DTo.AdvanceRequest;
+import com.Jetcheck.Aplication.DTo.Request.AdvanceRequest;
 import com.Jetcheck.Aplication.Entity.Avances;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +13,7 @@ public class AdvanceMapper {
                 .id_avance(advanceRequest.getAdvanceId())
                 .idEstado(7)
                 .fecha_creacion(new Date())
-                .id_ruta(advanceRequest.getRouteId())
+                .idRuta(advanceRequest.getRouteId())
                 .descripcion(advanceRequest.getDescription())
                 .titulo(advanceRequest.getTittle())
                 .build();

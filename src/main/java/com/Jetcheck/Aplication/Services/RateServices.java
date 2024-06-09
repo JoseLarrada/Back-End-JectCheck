@@ -1,6 +1,6 @@
 package com.Jetcheck.Aplication.Services;
 
-import com.Jetcheck.Aplication.DTo.RateRequest;
+import com.Jetcheck.Aplication.DTo.Request.RateRequest;
 import com.Jetcheck.Aplication.Entity.Calificaciones;
 import com.Jetcheck.Aplication.Mapper.RateMapper;
 import com.Jetcheck.Aplication.Repository.AssignmentRepository;

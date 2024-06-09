@@ -18,7 +18,8 @@ import java.util.Date;
 @NoArgsConstructor
 @Table(name = "entregas")
 public class Entregas {
-    private String id_avance;
+    @Column(name = "id_avance")
+    private String idAvance;
     private String comentario;
     @Id
     private String id_entrega;

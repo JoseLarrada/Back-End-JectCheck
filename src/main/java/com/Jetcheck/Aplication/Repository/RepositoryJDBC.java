@@ -1,7 +1,7 @@
 package com.Jetcheck.Aplication.Repository;
 
 import com.Jetcheck.Aplication.Config.IdGeneratorConfig;
-import com.Jetcheck.Aplication.DTo.InteractiveSearch;
+import com.Jetcheck.Aplication.DTo.Response.InteractiveSearch;
 import com.Jetcheck.Aplication.Entity.Rutas;
 import com.Jetcheck.Aplication.Entity.Usuarios;
 import com.Jetcheck.Aplication.Excepcetion.PersonExceptions;

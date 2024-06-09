@@ -1,10 +1,8 @@
 package com.Jetcheck.Aplication.Repository;
 
-import com.Jetcheck.Aplication.DTo.InfoAssignmentResponse;
 import com.Jetcheck.Aplication.Entity.Avances;
 import com.Jetcheck.Aplication.Entity.Entregas;
 import com.Jetcheck.Aplication.Excepcetion.PersonExceptions;
-import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -48,7 +46,7 @@ public class OtherRepository {
             Avances advance = new Avances();
             advance.setIdEstado(resultSet.getInt("id_estado"));
             advance.setFecha_creacion(resultSet.getDate("fecha_creacion"));
-            advance.setId_ruta(resultSet.getString("id_ruta"));
+            advance.setIdRuta(resultSet.getString("id_ruta"));
             advance.setId_avance(resultSet.getString("id_avance"));
             advance.setDescripcion(resultSet.getString("descripcion"));
             advance.setTitulo(resultSet.getString("titulo"));
@@ -60,7 +58,7 @@ public class OtherRepository {
         String sql="SELECT * FROM entregas WHERE id_avance= ?";
         List<Entregas> Assignments = jdbcTemplate2.query(sql, new Object[] { id_Advance } ,(resultSet, rowNum) -> {
             Entregas Assignment = new Entregas();
-            Assignment.setId_avance(resultSet.getString("id_avance"));
+            Assignment.setIdAvance(resultSet.getString("id_avance"));
             Assignment.setComentario(resultSet.getString("comentario"));
             Assignment.setId_entrega(resultSet.getString("id_entrega"));
             return Assignment;

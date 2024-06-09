@@ -1,14 +1,12 @@
 package com.Jetcheck.Aplication.Services;
 
 import com.Jetcheck.Aplication.Config.IdGeneratorConfig;
-import com.Jetcheck.Aplication.DTo.AssignmentRequest;
-import com.Jetcheck.Aplication.Entity.Avances;
+import com.Jetcheck.Aplication.DTo.Request.AssignmentRequest;
 import com.Jetcheck.Aplication.Entity.Entregas;
 import com.Jetcheck.Aplication.Mapper.AssignmentMapper;
 import com.Jetcheck.Aplication.Repository.AdvanceRepository;
 import com.Jetcheck.Aplication.Repository.AssignmentRepository;
 import com.Jetcheck.Aplication.Repository.OtherRepository;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;

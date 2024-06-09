@@ -1,19 +1,16 @@
 package com.Jetcheck.Aplication.Services;
 
 import com.Jetcheck.Aplication.Config.IdGeneratorConfig;
-import com.Jetcheck.Aplication.DTo.AdvanceRequest;
-import com.Jetcheck.Aplication.DTo.AssignmentRequest;
-import com.Jetcheck.Aplication.DTo.FileResponse;
-import com.Jetcheck.Aplication.DTo.InfoAssignmentResponse;
+import com.Jetcheck.Aplication.DTo.Request.AssignmentRequest;
+import com.Jetcheck.Aplication.DTo.Response.FileResponse;
+import com.Jetcheck.Aplication.DTo.Response.InfoAssignmentResponse;
 import com.Jetcheck.Aplication.Entity.Calificaciones;
-import com.Jetcheck.Aplication.Entity.DatosArchivos;
 import com.Jetcheck.Aplication.Entity.Entregas;
 import com.Jetcheck.Aplication.Mapper.AssignmentMapper;
 import com.Jetcheck.Aplication.Repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 

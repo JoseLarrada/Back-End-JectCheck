@@ -1,9 +1,9 @@
 package com.Jetcheck.Aplication.Controller;
 
-import com.Jetcheck.Aplication.DTo.AuthenticationRequest;
-import com.Jetcheck.Aplication.DTo.AuthenticationResponse;
-import com.Jetcheck.Aplication.DTo.RecoverRequest;
-import com.Jetcheck.Aplication.DTo.RegisterRequest;
+import com.Jetcheck.Aplication.DTo.Request.AuthenticationRequest;
+import com.Jetcheck.Aplication.DTo.Response.AuthenticationResponse;
+import com.Jetcheck.Aplication.DTo.Request.RecoverRequest;
+import com.Jetcheck.Aplication.DTo.Request.RegisterRequest;
 import com.Jetcheck.Aplication.Excepcetion.PersonExceptions;
 import com.Jetcheck.Aplication.Services.AuthenticationService;
 import lombok.RequiredArgsConstructor;

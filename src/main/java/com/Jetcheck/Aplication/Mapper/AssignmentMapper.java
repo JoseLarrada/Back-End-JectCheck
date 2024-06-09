@@ -1,6 +1,6 @@
 package com.Jetcheck.Aplication.Mapper;
 
-import com.Jetcheck.Aplication.DTo.AssignmentRequest;
+import com.Jetcheck.Aplication.DTo.Request.AssignmentRequest;
 import com.Jetcheck.Aplication.Entity.Entregas;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +14,7 @@ public class AssignmentMapper {
         LocalDateTime now = LocalDateTime.now();
         Date fechaCreacion = Date.from(now.atZone(ZoneId.systemDefault()).toInstant());
         return Entregas.builder()
-                .id_avance(assignmentRequest.getIdAdvance())
+                .idAvance(assignmentRequest.getIdAdvance())
                 .comentario(assignmentRequest.getComment())
                 .id_entrega(assignmentRequest.getIdAssignment())
                 .fechaEntrega(fechaCreacion)

@@ -1,6 +1,6 @@
 package com.Jetcheck.Aplication.Services;
 
-import com.Jetcheck.Aplication.DTo.FileResponse;
+import com.Jetcheck.Aplication.DTo.Response.FileResponse;
 import com.Jetcheck.Aplication.Entity.DatosArchivos;
 import com.Jetcheck.Aplication.Repository.AssignmentRepository;
 import com.Jetcheck.Aplication.Repository.FileAssingmentRepository;

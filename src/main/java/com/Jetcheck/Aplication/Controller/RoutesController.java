@@ -1,16 +1,12 @@
 package com.Jetcheck.Aplication.Controller;
 
-import com.Jetcheck.Aplication.DTo.RoutesRequest;
-import com.Jetcheck.Aplication.DTo.RoutesResponse;
-import com.Jetcheck.Aplication.Entity.Rutas;
-import com.Jetcheck.Aplication.Repository.OtherRepository;
+import com.Jetcheck.Aplication.DTo.Request.RoutesRequest;
+import com.Jetcheck.Aplication.DTo.Response.RoutesResponse;
 import com.Jetcheck.Aplication.Services.RoutesServices;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor

@@ -1,4 +1,5 @@
-package com.Jetcheck.Aplication.DTo;
+package com.Jetcheck.Aplication.DTo.Request;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -8,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class AuthenticationResponse {
-    private String Token;
-    private int Perfil;
+public class AuthenticationRequest {
+    String username;
+    String password;
 }

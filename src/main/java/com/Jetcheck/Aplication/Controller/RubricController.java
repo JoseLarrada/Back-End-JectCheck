@@ -1,11 +1,10 @@
 package com.Jetcheck.Aplication.Controller;
 
-import com.Jetcheck.Aplication.DTo.FileResponse;
+import com.Jetcheck.Aplication.DTo.Response.FileResponse;
 import com.Jetcheck.Aplication.Entity.Rubricas;
 import com.Jetcheck.Aplication.Services.RubricsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 

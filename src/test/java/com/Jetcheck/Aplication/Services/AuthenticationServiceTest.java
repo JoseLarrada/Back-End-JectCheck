@@ -1,8 +1,7 @@
 package com.Jetcheck.Aplication.Services;
 
-import com.Jetcheck.Aplication.DTo.AuthenticationRequest;
-import com.Jetcheck.Aplication.DTo.AuthenticationResponse;
-import com.Jetcheck.Aplication.DTo.RegisterRequest;
+import com.Jetcheck.Aplication.DTo.Response.AuthenticationResponse;
+import com.Jetcheck.Aplication.DTo.Request.RegisterRequest;
 import com.Jetcheck.Aplication.Entity.Role;
 import com.Jetcheck.Aplication.Entity.Usuarios;
 import com.Jetcheck.Aplication.Excepcetion.PersonExceptions;
@@ -13,15 +12,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;

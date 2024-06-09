@@ -1,7 +1,6 @@
 package com.Jetcheck.Aplication.Controller;
 
-import com.Jetcheck.Aplication.DTo.InfoAssignmentResponse;
-import com.Jetcheck.Aplication.DTo.RateRequest;
+import com.Jetcheck.Aplication.DTo.Request.RateRequest;
 import com.Jetcheck.Aplication.Entity.Calificaciones;
 import com.Jetcheck.Aplication.Services.RateServices;
 import lombok.RequiredArgsConstructor;

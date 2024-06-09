@@ -1,6 +1,6 @@
 package com.Jetcheck.Aplication.Controller;
 
-import com.Jetcheck.Aplication.DTo.InteractiveSearch;
+import com.Jetcheck.Aplication.DTo.Response.InteractiveSearch;
 import com.Jetcheck.Aplication.Repository.OtherRepository;
 import com.Jetcheck.Aplication.Repository.RepositoryJDBC;
 import lombok.RequiredArgsConstructor;

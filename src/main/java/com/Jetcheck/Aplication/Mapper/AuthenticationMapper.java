@@ -1,12 +1,11 @@
 package com.Jetcheck.Aplication.Mapper;
 
-import com.Jetcheck.Aplication.DTo.RecoverRequest;
-import com.Jetcheck.Aplication.DTo.RegisterRequest;
-import com.Jetcheck.Aplication.DTo.UpdateUserRequest;
+import com.Jetcheck.Aplication.DTo.Request.RecoverRequest;
+import com.Jetcheck.Aplication.DTo.Request.RegisterRequest;
+import com.Jetcheck.Aplication.DTo.Request.UpdateUserRequest;
 import com.Jetcheck.Aplication.Entity.Role;
 import com.Jetcheck.Aplication.Entity.Usuarios;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

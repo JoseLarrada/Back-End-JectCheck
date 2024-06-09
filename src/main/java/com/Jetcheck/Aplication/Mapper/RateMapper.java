@@ -1,7 +1,7 @@
 package com.Jetcheck.Aplication.Mapper;
 
 import com.Jetcheck.Aplication.Config.IdGeneratorConfig;
-import com.Jetcheck.Aplication.DTo.RateRequest;
+import com.Jetcheck.Aplication.DTo.Request.RateRequest;
 import com.Jetcheck.Aplication.Entity.Calificaciones;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

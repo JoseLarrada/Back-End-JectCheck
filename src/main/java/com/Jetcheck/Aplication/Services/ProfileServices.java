@@ -1,9 +1,8 @@
 package com.Jetcheck.Aplication.Services;
 
-import com.Jetcheck.Aplication.DTo.ChangeRequest;
-import com.Jetcheck.Aplication.DTo.UpdateUserRequest;
+import com.Jetcheck.Aplication.DTo.Request.ChangeRequest;
+import com.Jetcheck.Aplication.DTo.Request.UpdateUserRequest;
 import com.Jetcheck.Aplication.Entity.Usuarios;
-import com.Jetcheck.Aplication.Excepcetion.PersonExceptions;
 import com.Jetcheck.Aplication.Mapper.AuthenticationMapper;
 import com.Jetcheck.Aplication.Repository.RepositoryJDBC;
 import com.Jetcheck.Aplication.Repository.UserRepository;
@@ -11,7 +10,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 

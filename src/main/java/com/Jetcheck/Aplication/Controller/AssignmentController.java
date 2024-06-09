@@ -1,7 +1,7 @@
 package com.Jetcheck.Aplication.Controller;
 
-import com.Jetcheck.Aplication.DTo.AssignmentRequest;
-import com.Jetcheck.Aplication.DTo.InfoAssignmentResponse;
+import com.Jetcheck.Aplication.DTo.Request.AssignmentRequest;
+import com.Jetcheck.Aplication.DTo.Response.InfoAssignmentResponse;
 import com.Jetcheck.Aplication.Entity.Entregas;
 import com.Jetcheck.Aplication.Services.AssignmentServices;
 import lombok.RequiredArgsConstructor;

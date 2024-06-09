@@ -1,7 +1,9 @@
 package com.Jetcheck.Aplication.Controller;
 
+import com.Jetcheck.Aplication.Entity.Avances;
 import com.Jetcheck.Aplication.Entity.Rutas;
 import com.Jetcheck.Aplication.Entity.Usuarios;
+import com.Jetcheck.Aplication.Services.AnalitycsService;
 import com.Jetcheck.Aplication.Services.UploadContentService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +17,7 @@ import java.util.List;
 @RequestMapping("/api/v1/PrincipalContent")
 public class UploadServiceController {
     private final UploadContentService uploadContentService;
+    private final AnalitycsService analitycsService;
     @GetMapping()
     public ResponseEntity<List<Rutas>> Upload(HttpServletRequest request){
         if (uploadContentService.UploadProjects(request)!=null){
@@ -30,5 +33,9 @@ public class UploadServiceController {
     @GetMapping("/filterroutes/{state}")
     public ResponseEntity<List<Rutas>> filterProjects(HttpServletRequest request, @PathVariable int state){
         return uploadContentService.filterRotesByIdEstado(request,state);
+    }
+    @GetMapping("/pruebas")
+    public List<Avances> getValue(HttpServletRequest request){
+       return analitycsService.orderDate(request);
     }
 }

@@ -1,8 +1,7 @@
 package com.Jetcheck.Aplication.Services;
 
 import com.Jetcheck.Aplication.Config.IdGeneratorConfig;
-import com.Jetcheck.Aplication.DTo.CustomReportResponse;
-import com.Jetcheck.Aplication.DTo.GeneralReportResponse;
+import com.Jetcheck.Aplication.DTo.Response.GeneralReportResponse;
 import com.Jetcheck.Aplication.Entity.Rutas;
 import com.Jetcheck.Aplication.Repository.OtherRepository;
 import com.Jetcheck.Aplication.Repository.RateRepository;
@@ -15,7 +14,6 @@ import com.itextpdf.io.source.ByteArrayOutputStream;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import java.io.FileOutputStream;
 import java.util.HashMap;

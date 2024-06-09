@@ -1,22 +1,18 @@
 package com.Jetcheck.Aplication.Controller;
 
 import com.Jetcheck.Aplication.DTo.Asset;
-import com.Jetcheck.Aplication.DTo.FileResponse;
+import com.Jetcheck.Aplication.DTo.Response.FileResponse;
 import com.Jetcheck.Aplication.Entity.DatosArchivos;
-import com.Jetcheck.Aplication.Services.AssignmentServices;
 import com.Jetcheck.Aplication.Services.FilesService;
 import com.Jetcheck.Aplication.Services.S3Services;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/assets")

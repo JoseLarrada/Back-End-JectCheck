@@ -1,7 +1,7 @@
 package com.Jetcheck.Aplication.Controller;
 
-import com.Jetcheck.Aplication.DTo.ChangeRequest;
-import com.Jetcheck.Aplication.DTo.UpdateUserRequest;
+import com.Jetcheck.Aplication.DTo.Request.ChangeRequest;
+import com.Jetcheck.Aplication.DTo.Request.UpdateUserRequest;
 import com.Jetcheck.Aplication.Excepcetion.PersonExceptions;
 import com.Jetcheck.Aplication.Services.ProfileServices;
 import jakarta.servlet.http.HttpServletRequest;

@@ -1,10 +1,9 @@
 package com.Jetcheck.Aplication.Services;
 
 import com.Jetcheck.Aplication.Config.IdGeneratorConfig;
-import com.Jetcheck.Aplication.DTo.AdvanceRequest;
-import com.Jetcheck.Aplication.DTo.FileResponse;
+import com.Jetcheck.Aplication.DTo.Request.AdvanceRequest;
+import com.Jetcheck.Aplication.DTo.Response.FileResponse;
 import com.Jetcheck.Aplication.Entity.Avances;
-import com.Jetcheck.Aplication.Excepcetion.PersonExceptions;
 import com.Jetcheck.Aplication.Mapper.AdvanceMapper;
 import com.Jetcheck.Aplication.Repository.AdvanceRepository;
 import com.Jetcheck.Aplication.Repository.OtherRepository;
@@ -13,9 +12,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.util.Date;
 import java.util.List;
 
 @Service

@@ -1,4 +1,4 @@
-package com.Jetcheck.Aplication.DTo;
+package com.Jetcheck.Aplication.DTo.Response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

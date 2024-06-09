@@ -1,8 +1,8 @@
 package com.Jetcheck.Aplication.Services;
 
 import com.Jetcheck.Aplication.Config.IdGeneratorConfig;
-import com.Jetcheck.Aplication.DTo.RoutesRequest;
-import com.Jetcheck.Aplication.DTo.RoutesResponse;
+import com.Jetcheck.Aplication.DTo.Request.RoutesRequest;
+import com.Jetcheck.Aplication.DTo.Response.RoutesResponse;
 import com.Jetcheck.Aplication.Entity.Rutas;
 import com.Jetcheck.Aplication.Mapper.RoutesMapper;
 import com.Jetcheck.Aplication.Repository.*;

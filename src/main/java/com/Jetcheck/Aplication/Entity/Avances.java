@@ -21,7 +21,8 @@ public class Avances {
     @Column(name = "id_estado")
     private int idEstado;
     private Date fecha_creacion;
-    private String id_ruta;
+    @Column(name ="id_ruta")
+    private String idRuta;
     @Id
     @Column(nullable = false)
     private String id_avance;

@@ -1,6 +1,6 @@
 package com.Jetcheck.Aplication.Mapper;
 
-import com.Jetcheck.Aplication.DTo.RoutesRequest;
+import com.Jetcheck.Aplication.DTo.Request.RoutesRequest;
 import com.Jetcheck.Aplication.Entity.Rutas;
 import org.springframework.stereotype.Service;
 

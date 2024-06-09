@@ -1,4 +1,4 @@
-package com.Jetcheck.Aplication.DTo;
+package com.Jetcheck.Aplication.DTo.Request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,9 +9,9 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class RecoverRequest {
+public class UpdateUserRequest {
+    String name;
+    String lastname;
+    String city;
     String email;
-    String password;
-    String confirmPassword;
-    String id;
 }

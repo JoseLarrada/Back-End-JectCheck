@@ -1,15 +1,11 @@
 package com.Jetcheck.Aplication.Services;
 
 import com.Jetcheck.Aplication.DTo.Asset;
-import com.Jetcheck.Aplication.DTo.FileResponse;
-import com.Jetcheck.Aplication.Entity.DatosArchivos;
-import com.Jetcheck.Aplication.Repository.AssignmentRepository;
-import com.Jetcheck.Aplication.Repository.FileAssingmentRepository;
+import com.Jetcheck.Aplication.DTo.Response.FileResponse;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.*;
 import com.amazonaws.util.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;

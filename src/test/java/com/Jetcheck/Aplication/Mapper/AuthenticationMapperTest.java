@@ -1,13 +1,11 @@
 package com.Jetcheck.Aplication.Mapper;
 
-import com.Jetcheck.Aplication.DTo.RecoverRequest;
-import com.Jetcheck.Aplication.DTo.RegisterRequest;
-import com.Jetcheck.Aplication.DTo.UpdateUserRequest;
+import com.Jetcheck.Aplication.DTo.Request.RecoverRequest;
+import com.Jetcheck.Aplication.DTo.Request.RegisterRequest;
+import com.Jetcheck.Aplication.DTo.Request.UpdateUserRequest;
 import com.Jetcheck.Aplication.Entity.Usuarios;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 import static org.junit.jupiter.api.Assertions.*;
 

@@ -1,10 +1,9 @@
 package com.Jetcheck.Aplication.Controller;
 
-import com.Jetcheck.Aplication.DTo.AdvanceRequest;
+import com.Jetcheck.Aplication.DTo.Request.AdvanceRequest;
 import com.Jetcheck.Aplication.Entity.Avances;
 import com.Jetcheck.Aplication.Repository.OtherRepository;
 import com.Jetcheck.Aplication.Services.AdvanceService;
-import jakarta.persistence.PersistenceException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

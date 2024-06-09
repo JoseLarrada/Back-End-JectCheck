@@ -1,4 +1,4 @@
-package com.Jetcheck.Aplication.DTo;
+package com.Jetcheck.Aplication.DTo.Request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,9 +9,13 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class UpdateUserRequest {
+public class RegisterRequest {
+    String id;
+    String username;
+    String password;
     String name;
     String lastname;
     String city;
     String email;
+    int profile;
 }
