@@ -103,7 +103,6 @@ public class RepositoryJDBC {
             return null;
         }
     }
-
     public String GetIdStudentByUsername(String username){
         try{
             String sql = "select id_estudiante " +
@@ -143,7 +142,6 @@ public class RepositoryJDBC {
             throw new PersonExceptions("No se ha podido completar la sentencia");
         }
     }
-
     public List<InteractiveSearch> findUserInteractive(String name,String roleUser){
         try {
             String sql = "SELECT nombre_completo FROM " + roleUser + " WHERE nombre_completo LIKE ?";
@@ -158,5 +156,27 @@ public class RepositoryJDBC {
             throw new RuntimeException();
         }
     }
-
+    public List<InteractiveSearch> getMostAreas(String tableName,String idTableName,String idUser){
+        try {
+            String sql = String.format("""
+                SELECT f.nombre, COUNT(p.id_ruta) AS total_proyectos
+                FROM areas f
+                JOIN rutas p ON f.id_area = p.id_area
+                JOIN %s e ON e.%s = p.%s
+                WHERE e.id_usuario = ?
+                GROUP BY f.nombre
+                ORDER BY total_proyectos DESC
+                LIMIT 3;
+                """, tableName, idTableName, idTableName);
+            List<InteractiveSearch> listProject = jdbcTemplate.query(sql, new Object[] {idUser}, (resultSet, rowNum) ->{
+                InteractiveSearch result= new InteractiveSearch();
+                result.setInitial(resultSet.getString("nombre"));
+                result.setFullName(resultSet.getString("total_proyectos"));
+                return result;
+            });
+            return listProject;
+        }catch (Exception e){
+            throw new RuntimeException(e.getMessage());
+        }
+    }
 }

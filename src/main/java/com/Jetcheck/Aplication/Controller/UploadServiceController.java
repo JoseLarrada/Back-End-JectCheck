@@ -1,5 +1,7 @@
 package com.Jetcheck.Aplication.Controller;
 
+import com.Jetcheck.Aplication.DTo.Response.AnalitycsResponse;
+import com.Jetcheck.Aplication.DTo.Response.InteractiveSearch;
 import com.Jetcheck.Aplication.Entity.Avances;
 import com.Jetcheck.Aplication.Entity.Rutas;
 import com.Jetcheck.Aplication.Entity.Usuarios;
@@ -34,8 +36,8 @@ public class UploadServiceController {
     public ResponseEntity<List<Rutas>> filterProjects(HttpServletRequest request, @PathVariable int state){
         return uploadContentService.filterRotesByIdEstado(request,state);
     }
-    @GetMapping("/pruebas")
-    public List<Avances> getValue(HttpServletRequest request){
-       return analitycsService.orderDate(request);
+    @GetMapping("/analitycs")
+    public ResponseEntity<AnalitycsResponse> getInfoAnalitycs(HttpServletRequest request){
+       return analitycsService.returnAnalitycs(request);
     }
 }
