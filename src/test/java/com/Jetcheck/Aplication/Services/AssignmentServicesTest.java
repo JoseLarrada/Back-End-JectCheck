@@ -14,6 +14,9 @@ import org.mockito.Mock;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import java.time.LocalDateTime;
+import java.util.Date;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.openMocks;
@@ -40,10 +43,10 @@ class AssignmentServicesTest {
 
     @Test
     void addAssignment() {
+        Date hour = new Date();
         AssignmentRequest request =new AssignmentRequest("11111","rutaanexo1",
-                "rutaFile1", null,"124s2");
-        Entregas entregas = new Entregas(0.0,"11111","rutaanexo1",
-                "rutaFile1",null,"124s2");
+                "rutaFile1", null);
+        Entregas entregas = new Entregas("11111","rutaanexo1","12421", hour);
 
         when(advanceRepository.existsById(request.getIdAdvance())).thenReturn(true);
         when(assignmentMapper.mapperAssignment(request)).thenReturn(entregas);
@@ -60,7 +63,7 @@ class AssignmentServicesTest {
     @Test
     void addAssignmentWithNullFile(){
         AssignmentRequest request =new AssignmentRequest("11111","rutaanexo1",
-                null,null,"124s2");
+                null,null);
 
         ResponseEntity<String> response = assignmentServices.addAssignment(request);
 
@@ -73,7 +76,7 @@ class AssignmentServicesTest {
     @Test
     void addAssignmentWithNonExistAdvance(){
         AssignmentRequest request =new AssignmentRequest("11111","rutaanexo1",
-                "rutafile1",null,"124s2");
+                "rutafile1",null);
 
         when(advanceRepository.existsById(request.getIdAdvance())).thenReturn(false);
 

@@ -46,9 +46,9 @@ class AdvanceServiceTest {
         AdvanceRequest request = new AdvanceRequest("Proyecto1","proyecto de pruebas unitarias",
                 null,"12345","56789");
         Avances avance = new Avances(5,new Date(),"12345","56789",
-                "proyecto de pruebas unitarias",null,"Proyecto1");
+                "proyecto de pruebas unitarias","Pruebas",5.0);
         Avances avanceCreado = new Avances(5,new Date(),"12345","56789",
-                "proyecto de pruebas unitarias",null,"Proyecto1");
+                "proyecto de pruebas unitarias","Pruebas",0.0);
 
         when(routesRepository.existsById(request.getRouteId())).thenReturn(true);
         when(advanceMapper.mapperAdvance(request)).thenReturn(avance);
@@ -109,7 +109,7 @@ class AdvanceServiceTest {
 
         when(advanceRepository.existsById(identification)).thenReturn(true);
 
-        ResponseEntity<String> response=advanceService.deleteAvance(identification);
+        ResponseEntity<String> response=advanceService.deleteAvance("Advance1",identification);
 
         assertEquals(HttpStatus.OK,response.getStatusCode());
         assertTrue(response.getBody().contains("Eliminado Correctamente"));
@@ -121,7 +121,7 @@ class AdvanceServiceTest {
 
         when(advanceRepository.existsById(identification)).thenReturn(false);
 
-        ResponseEntity<String> response=advanceService.deleteAvance(identification);
+        ResponseEntity<String> response=advanceService.deleteAvance("Advance2",identification);
 
         assertEquals(HttpStatus.BAD_REQUEST,response.getStatusCode());
         assertTrue(response.getBody().contains("No existe un avance asociado"));
@@ -131,7 +131,7 @@ class AdvanceServiceTest {
     void deleteAvanceWithNullId() {
         String identification=null;
 
-        ResponseEntity<String> response=advanceService.deleteAvance(identification);
+        ResponseEntity<String> response=advanceService.deleteAvance("Advance",identification);
 
         assertEquals(HttpStatus.BAD_REQUEST,response.getStatusCode());
         assertTrue(response.getBody().contains("Añada un id valido"));
