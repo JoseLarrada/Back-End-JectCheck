@@ -92,7 +92,7 @@ public class RepositoryJDBC {
             String sql = "SELECT "+ id +" FROM "+ role + " WHERE nombre_completo = ?";
             return jdbcTemplate.queryForObject(sql, new Object[]{name}, String.class);
         }catch (EmptyResultDataAccessException e){
-            throw new PersonExceptions("El Estudiante no existe");
+            throw new PersonExceptions("El Estudiante no existe"+name);
         }
     }
     public String getFullNameUserById(String identificacion, String role, String idRole){

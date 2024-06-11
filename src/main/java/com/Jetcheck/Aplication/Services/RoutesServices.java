@@ -36,8 +36,12 @@ public class RoutesServices {
             String id_Estudiante=repositoryJDBC.GetIdStudentByUsername(username);
             String idDocente = repositoryJDBC.getIdUserByFullName(request.getTeacher(),"profesores","id_docente");
             //Verificacion de autollamado de metodos
-            request.setId_Member(nullMember(request.getId_Member()));
-            request.setId_Member2(nullMember(request.getId_Member2()));
+            if (request.getId_Member()!=null){
+                request.setId_Member(nullMember(request.getId_Member()));
+            }
+            if (request.getId_Member2()!=null){
+                request.setId_Member2(nullMember(request.getId_Member2()));
+            }
             int idArea=areasService.getIdAreaByName(request.getIdArea());
             int idFacultly= areasService.getIdFacultlyByName(request.getIdFacultly());
             routesRepository.save(routesMapper.mapperRoutes(request,idDocente,id_Estudiante,idArea,idFacultly));

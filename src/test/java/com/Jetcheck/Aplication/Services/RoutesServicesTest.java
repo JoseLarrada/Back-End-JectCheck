@@ -44,9 +44,9 @@ class RoutesServicesTest {
     void testAddRoute() {
         // Configurar datos de prueba
         RoutesRequest request = new RoutesRequest("asd2w1", "Proyecto de prueba Ing",
-                "Maribel", "JectCheck", "jose", "laura");
+                "Maribel", "JectCheck", "jose", "laura","Ingenierias","sistemas");
         Rutas ruta = new Rutas(5, "asd2w1", "Proyecto de prueba Ing",
-                "Maribel", "124324", "JectCheck", "21433", "32647");
+                "Maribel", "124324", "JectCheck", "21433", "32647",5.0,2,1);
         HttpServletRequest http = null;
 
         // Configurar comportamiento simulado
